@@ -188,6 +188,9 @@ STORAGES = {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
     },
 }
+# django-cloudinary-storage still reads this Django 4.x compatibility setting
+# while running its collectstatic command.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 if _cloudinary_url or all(CLOUDINARY_STORAGE.values()):
     INSTALLED_APPS = ['cloudinary', 'cloudinary_storage'] + INSTALLED_APPS
