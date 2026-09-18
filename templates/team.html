@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Team | {{ site_settings.agency_acronym }} Liberia{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HERO -->
+<section class="py-16 bg-lacd-navy text-white relative bg-grid-pattern">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+        <a href="{% url 'core:home' %}" class="inline-flex items-center gap-1 text-xs text-lacd-gold hover:underline mb-2">&larr; Back to Home</a>
+        <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-lacd-gold text-xs font-bold uppercase tracking-wider">
+            <i class="ri-team-line"></i> OUR PEOPLE
+        </span>
+        <h1 class="text-4xl sm:text-5xl font-heading font-extrabold text-white">Meet Our Team</h1>
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm">
+            A national institution built on the collective competence of its diverse professionals — from forestry, finance, economics, development communication, conservation agriculture, and animal science. Click any team member to view their bio.
+        </p>
+    </div>
+</section>
+
+<!-- TEAM GROUPS -->
+<section class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+
+        {% for group in team_groups %}
+        <div>
+            <!-- Group Header -->
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-amber-900 text-xs font-bold uppercase tracking-wider">
+                    <i class="{% if group.title == 'Founders' %}ri-hand-heart-line{% elif group.title == 'Board of Directors' %}ri-bank-line{% else %}ri-user-settings-line{% endif %}"></i> {{ group.title }}
+                </span>
+                <h2 class="text-3xl font-heading font-extrabold text-lacd-navy">{{ group.title }}</h2>
+            </div>
+
+            <!-- Group Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                {% for member in group.members %}
+                <button type="button" data-team-index="{{ member.index }}" onclick="openTeamBio({{ member.index }})" class="text-left bg-white rounded-2xl p-5 border border-slate-100 shadow-md hover-lift group cursor-pointer w-full">
+                    <div class="w-24 h-24 mx-auto rounded-full overflow-hidden bg-lacd-navy/5 ring-4 ring-lacd-green/10 group-hover:ring-lacd-gold/40 transition-all mb-4">
+                        {% if member.photo %}
+                            <img src="{{ member.photo }}" alt="{{ member.name }}" class="w-full h-full object-cover">
+                        {% else %}
+                            <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green text-lacd-gold flex items-center justify-center text-3xl font-heading font-extrabold">{{ member.name|slice:":1" }}</div>
+                        {% endif %}
+                    </div>
+                    <h4 class="font-heading font-bold text-sm text-lacd-navy text-center group-hover:text-lacd-green transition-colors">{{ member.name }}</h4>
+                    <p class="text-[11px] font-semibold text-slate-500 text-center mt-1 leading-snug">{{ member.position }}</p>
+                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-lacd-green mt-3 justify-center w-full">
+                        <i class="ri-eye-line"></i> Click to see bio
+                    </span>
+                </button>
+                {% empty %}
+                <div class="col-span-full text-center py-12 text-slate-500">No team members in this category yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+<!-- TEAM BIO MODAL -->
+<div id="team-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeTeamBio()"></div>
+    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden transform transition-all">
+        <div class="bg-gradient-to-r from-lacd-navy to-lacd-green p-6 relative">
+            <button type="button" onclick="closeTeamBio()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 text-white hover:bg-lacd-gold hover:text-lacd-navy flex items-center justify-center transition-colors" aria-label="Close bio">
+                <i class="ri-close-line text-xl"></i>
+            </button>
+            <div class="flex items-center gap-4 pr-10">
+                <div class="w-20 h-20 rounded-full overflow-hidden ring-4 ring-white/20 shrink-0 bg-white/10">
+                    <img id="modal-photo" src="" alt="" class="w-full h-full object-cover hidden">
+                    <div id="modal-photo-fallback" class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green text-lacd-gold flex items-center justify-center text-2xl font-heading font-extrabold"></div>
+                </div>
+                <div>
+                    <span id="modal-role" class="bg-lacd-gold text-lacd-navy text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full"></span>
+                    <h3 id="modal-name" class="font-heading font-extrabold text-xl text-white mt-2"></h3>
+                    <p id="modal-position" class="text-xs text-slate-200 font-semibold mt-0.5"></p>
+                </div>
+            </div>
+        </div>
+        <div class="p-6">
+            <p id="modal-bio" class="text-sm text-slate-600 leading-relaxed"></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+{{ team_data|json_script:"team-data" }}
+<script>
+    const teamData = JSON.parse(document.getElementById('team-data').textContent);
+
+    function openTeamBio(index) {
+        const member = teamData[index];
+        if (!member) return;
+
+        document.getElementById('modal-name').textContent = member.name;
+        document.getElementById('modal-position').textContent = member.position;
+        document.getElementById('modal-role').textContent = member.role;
+        document.getElementById('modal-bio').textContent = member.bio || 'No biography available yet.';
+
+        const photo = document.getElementById('modal-photo');
+        const fallback = document.getElementById('modal-photo-fallback');
+        if (member.photo) {
+            photo.src = member.photo;
+            photo.classList.remove('hidden');
+            fallback.classList.add('hidden');
+            fallback.textContent = '';
+        } else {
+            photo.src = '';
+            photo.classList.add('hidden');
+            fallback.classList.remove('hidden');
+            fallback.textContent = member.name.charAt(0);
+        }
+
+        const modal = document.getElementById('team-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeTeamBio() {
+        const modal = document.getElementById('team-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeTeamBio();
+    });
+</script>
+{% endblock %}

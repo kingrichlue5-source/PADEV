@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Headquarters | {{ site_settings.agency_acronym }} Liberia{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative bg-grid-pattern">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+        <span class="bg-lacd-gold text-lacd-navy text-xs font-extrabold uppercase px-3 py-1 rounded-full">WE WANT TO HEAR FROM YOU</span>
+        <h1 class="text-4xl font-heading font-extrabold text-white">Contact Agency Headquarters</h1>
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm">Have feedback, partnership ideas, or project inquiries? Reach out directly to our team at our Congo Town headquarters.</p>
+    </div>
+</section>
+
+<section class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        
+        <!-- Address Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-center space-y-3 hover-lift">
+                <div class="w-14 h-14 rounded-2xl bg-lacd-green/10 text-lacd-green mx-auto flex items-center justify-center text-2xl">
+                    <i class="ri-map-pin-2-fill"></i>
+                </div>
+                <h3 class="font-heading font-bold text-lg text-lacd-navy">Main Headquarters</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">{{ site_settings.address }}</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-center space-y-3 hover-lift">
+                <div class="w-14 h-14 rounded-2xl bg-lacd-gold/20 text-amber-900 mx-auto flex items-center justify-center text-2xl">
+                    <i class="ri-phone-fill"></i>
+                </div>
+                <h3 class="font-heading font-bold text-lg text-lacd-navy">Phone & Hotlines</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">{{ site_settings.contact_phone }}</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-center space-y-3 hover-lift">
+                <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-700 mx-auto flex items-center justify-center text-2xl">
+                    <i class="ri-mail-send-fill"></i>
+                </div>
+                <h3 class="font-heading font-bold text-lg text-lacd-navy">Official Email Desk</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">General: {{ site_settings.contact_email }}<br>Procurement: procurement@padev.org</p>
+            </div>
+
+        </div>
+
+        <!-- Split Form & Embedded Map Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-slate-100 items-start">
+            
+            <!-- Contact Form -->
+            <div class="lg:col-span-7 space-y-6">
+                <h2 class="text-2xl font-heading font-extrabold text-lacd-navy">Send Us a Direct Message</h2>
+                
+                <form action="{% url 'core:contact' %}" method="POST" class="space-y-4">
+                    {% csrf_token %}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Full Name *</label>
+                            <input type="text" name="full_name" required placeholder="e.g. Mary Kamara" class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                            <input type="email" name="email" required placeholder="mary@example.com" class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Phone Number</label>
+                            <input type="text" name="phone" placeholder="+231 77..." class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subject</label>
+                            <input type="text" name="subject" placeholder="Inquiry category..." class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Message *</label>
+                        <textarea name="message" rows="5" required placeholder="Type your detailed message here..." class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-extrabold px-8 py-4 rounded-xl shadow transition-all">
+                        SUBMIT INQUIRY NOW
+                    </button>
+                </form>
+            </div>
+
+            <!-- Map Box -->
+            <div class="lg:col-span-5 space-y-4">
+                <h3 class="text-xl font-heading font-bold text-lacd-navy">Our Headquarters Location</h3>
+                <div class="w-full h-80 rounded-2xl overflow-hidden shadow-inner border border-slate-200 bg-slate-100 relative">
+                    <!-- Google Maps Embed placeholder -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15880.62!2d-10.7102!3d6.2866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTcnMTEuOSJOIDEwwrA0MicyNy41Ilc!5e0!3m2!1sen!2slr!4v1700000000000!5m2!1sen!2slr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+{% endblock %}

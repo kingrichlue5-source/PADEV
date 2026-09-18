@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+
+{% block title %}{{ publication.title }} | {{ site_settings.agency_acronym }} Publications{% endblock %}
+{% block meta_desc %}{{ publication.meta_description|default:publication.description }}{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative">
+    <div class="max-w-5xl mx-auto px-4 space-y-4">
+        <a href="{% url 'core:publication_list' %}" class="inline-flex items-center gap-1 text-xs text-lacd-gold hover:underline mb-2">&larr; Back to Publications</a>
+        <div class="flex flex-wrap items-center gap-3">
+            <span class="bg-lacd-gold text-lacd-navy text-xs font-bold px-3 py-1 rounded-full uppercase">{{ publication.get_category_display }}</span>
+            <span class="text-xs text-slate-300"><i class="ri-calendar-line text-lacd-gold"></i> {{ publication.publication_date|date:"F Y" }}</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">{{ publication.title }}</h1>
+        <div class="flex items-center gap-6 text-xs text-slate-300">
+            <span><i class="ri-file-pdf-line text-lacd-gold"></i> {{ publication.file_size }}</span>
+            <span><i class="ri-download-line text-lacd-gold"></i> {{ publication.download_count }} downloads</span>
+            <span><i class="ri-eye-line text-lacd-gold"></i> {% get_hit_count for publication %} views</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 space-y-8">
+        {% if publication.cover_image %}
+        <div class="rounded-2xl overflow-hidden shadow-lg">
+            <img src="{{ publication.cover_image.url }}" alt="{{ publication.title }}" class="w-full h-auto object-cover max-h-[400px]">
+        </div>
+        {% endif %}
+
+        <div class="prose max-w-none text-slate-700 space-y-4 leading-relaxed">
+            <h3 class="text-xl font-heading font-bold text-lacd-navy">About This Publication</h3>
+            <p>{{ publication.description }}</p>
+        </div>
+
+        <!-- Download Card -->
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-xl bg-red-50 text-red-600 flex items-center justify-center text-3xl">
+                    <i class="ri-file-pdf-2-line"></i>
+                </div>
+                <div>
+                    <h4 class="font-heading font-bold text-lacd-navy">{{ publication.title }}</h4>
+                    <p class="text-xs text-slate-500">{{ publication.file_size }} | {{ publication.publication_date|date:"M Y" }}</p>
+                </div>
+            </div>
+            {% if publication.pdf_file %}
+            <a href="{{ publication.pdf_file.url }}" download class="inline-flex items-center gap-2 bg-lacd-green hover:bg-lacd-navy text-white font-heading font-bold text-sm px-6 py-3 rounded-xl shadow transition-all">
+                <i class="ri-download-2-line text-base"></i>
+                <span>Download PDF</span>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

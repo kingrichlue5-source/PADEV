@@ -1,0 +1,18 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# User-uploaded media is stored in Cloudinary in production.
+media/*
+!media/.gitkeep
+
+# Generated static output is rebuilt by Railway.
+staticfiles/*
+!staticfiles/.gitkeep
+
+.pytest_cache/
+.coverage
+htmlcov/
+.DS_Store

@@ -1,0 +1,615 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home | {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION (EDUKA CONCEPT INSPIRED) -->
+<section class="relative {% if site_settings.hero_background_image %}bg-cover bg-center bg-no-repeat{% else %}bg-gradient-to-b from-slate-900 via-lacd-navy to-lacd-green-dark{% endif %} text-white pt-12 pb-32 overflow-hidden bg-grid-pattern"
+         {% if site_settings.hero_background_image %}style="background-image: url('{{ site_settings.hero_background_image.url }}');"{% endif %}>
+    <!-- Geometric Background Lights -->
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-lacd-gold/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 -right-24 w-96 h-96 bg-lacd-green/30 rounded-full blur-3xl pointer-events-none"></div>
+    {% if site_settings.hero_background_image %}
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-lacd-navy/70 to-lacd-green-dark/90 pointer-events-none"></div>
+    {% endif %}
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Hero Content -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-lacd-gold text-xs font-semibold uppercase tracking-wider">
+                    <i class="ri-sparkling-fill text-lacd-gold"></i> WELCOME TO {{ site_settings.agency_acronym }} {{ site_settings.site_name|upper }}
+                </div>
+
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold leading-tight text-white tracking-tight">
+                    Start Your Community's <br class="hidden sm:inline">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-lacd-gold via-amber-300 to-amber-400">Beautiful & Bright</span> Future.
+                </h1>
+
+                <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                    {{ site_settings.site_name }} builds alliances to mitigate global environmental challenges — supporting community-based natural resource management, sustainable forest conservation, and livelihood development in Liberia.
+                </p>
+
+                <!-- Hero CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="{% url 'core:program_list' %}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-extrabold text-base px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+                        <span>ABOUT MORE</span>
+                        <i class="ri-arrow-right-line text-lg"></i>
+                    </a>
+                    <a href="{% url 'core:project_list' %}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-heading font-bold text-base px-8 py-4 rounded-full border border-white/30 backdrop-blur-md transition-all">
+                        <span>LEARN MORE</span>
+                        <i class="ri-information-line text-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Hero Image Slider / Showcase -->
+            <div class="lg:col-span-5 relative">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10 bg-slate-800">
+                    <!-- Swiper Carousel Container -->
+                    <div class="swiper hero-swiper h-[400px] sm:h-[480px]">
+                        <div class="swiper-wrapper">
+                            {% for slide in hero_slides %}
+                            <div class="swiper-slide relative">
+                                {% if slide.slide_image %}
+                                    <img src="{{ slide.slide_image.url }}" alt="{{ slide.title }}" class="w-full h-full object-cover">
+                                {% else %}
+                                    <div class="w-full h-full bg-gradient-to-br from-lacd-green via-lacd-navy to-slate-900"></div>
+                                {% endif %}
+                                <div class="absolute inset-0 bg-gradient-to-t from-lacd-navy/90 via-transparent to-transparent flex items-end p-6">
+                                    <div class="space-y-2">
+                                        {% if slide.badge_text %}
+                                            <span class="bg-lacd-gold text-lacd-navy text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full">{{ slide.badge_text }}</span>
+                                        {% endif %}
+                                        <h3 class="text-white font-heading font-bold text-lg">{{ slide.title }}</h3>
+                                        {% if slide.description %}<p class="text-sm text-slate-200 max-w-md">{{ slide.description }}</p>{% endif %}
+                                        <div class="flex flex-wrap gap-3 pt-2">
+                                            {% if slide.primary_cta_text %}<a href="{{ slide.primary_cta_url }}" class="bg-lacd-gold text-lacd-navy px-4 py-2 rounded-full text-sm font-bold">{{ slide.primary_cta_text }}</a>{% endif %}
+                                            {% if slide.secondary_cta_text %}<a href="{{ slide.secondary_cta_url }}" class="bg-white/10 text-white px-4 py-2 rounded-full text-sm font-semibold border border-white/20">{{ slide.secondary_cta_text }}</a>{% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="swiper-slide relative">
+                                <div class="w-full h-full bg-gradient-to-br from-lacd-green via-lacd-navy to-slate-900"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-lacd-navy/90 via-transparent to-transparent flex items-end p-6">
+                                    <div>
+                                        <span class="bg-lacd-gold text-lacd-navy text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full">{{ site_settings.agency_acronym }} Initiative</span>
+                                        <h3 class="text-white font-heading font-bold text-lg mt-1">Community development at scale</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FLOATING 4-METRIC CARDS OVERLAPPING HERO -->
+<section class="relative z-20 -mt-16 sm:-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Card 01 -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover-lift relative overflow-hidden group">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-lacd-green flex items-center justify-center text-2xl group-hover:bg-lacd-green group-hover:text-lacd-gold transition-colors">
+                    <i class="ri-tree-line"></i>
+                </div>
+                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">01</span>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">Community Forest Governance</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">Establishing and strengthening community forest governance entities with FDA and local leaders.</p>
+        </div>
+
+        <!-- Card 02 -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover-lift relative overflow-hidden group">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl group-hover:bg-lacd-gold group-hover:text-lacd-navy transition-colors">
+                    <i class="ri-megaphone-line"></i>
+                </div>
+                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">02</span>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">Conservation Education</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">Inspiring pupils through environmental clubs and community theater troupes.</p>
+        </div>
+
+        <!-- Card 03 -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover-lift relative overflow-hidden group">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center text-2xl group-hover:bg-lacd-navy group-hover:text-lacd-gold transition-colors">
+                    <i class="ri-seedling-line"></i>
+                </div>
+                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">03</span>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">Livelihood & Enterprise</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">Conservation agriculture and beekeeping that raise incomes for forest-fringed communities.</p>
+        </div>
+
+        <!-- Card 04 -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover-lift relative overflow-hidden group">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                    <i class="ri-women-line"></i>
+                </div>
+                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">04</span>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">Gender & Social Inclusion</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">Inclusion of women, boys, girls, and marginalized people in all project activities.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ABOUT SPLIT SECTION (EDUKA STYLE) -->
+<section id="about" class="py-24 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Frame Collage with Gold Badge -->
+            <div class="lg:col-span-6 relative">
+                <div class="grid grid-cols-2 gap-4 items-center">
+                    <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Liberian Community Education" class="rounded-3xl shadow-lg w-full h-64 object-cover">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Community Farmers Meeting" class="rounded-3xl shadow-lg w-full h-80 object-cover -mt-6">
+                </div>
+
+                <!-- Gold Accent Years Experience Badge -->
+                <div class="absolute -bottom-6 left-6 bg-lacd-gold text-lacd-navy p-6 rounded-2xl shadow-xl flex items-center gap-4 max-w-xs border-2 border-white">
+                    <div class="w-12 h-12 rounded-xl bg-lacd-navy text-lacd-gold flex items-center justify-center text-2xl font-bold shrink-0">
+                        <i class="ri-award-fill"></i>
+                    </div>
+                    <div>
+                        <span class="font-heading font-extrabold text-xl leading-tight block">Since 2016</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider">Community-Based Development</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Content -->
+            <div class="lg:col-span-6 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lacd-gold/15 text-amber-800 text-xs font-bold uppercase tracking-wider">
+                    <i class="ri-shield-star-line"></i> ABOUT US
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-lacd-navy leading-tight">
+                    Building Alliances to Mitigate Global Environmental Challenges.
+                </h2>
+
+                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                    Founded in August 2016, Partners in Development (PADEV) is a leading national institution that builds its intervention on the collective competence of its diverse professionals — delivering community-based natural resource management, forest conservation, and livelihood development across over 100 forest-fringed communities in Liberia.
+                </p>
+
+                <!-- Two Highlight Boxes -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-lacd-green text-lacd-gold flex items-center justify-center text-lg shrink-0">
+                            <i class="ri-tree-line"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-sm text-lacd-navy">Conservation & Governance</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">Community forest governance & protected area support.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-lacd-navy text-lacd-gold flex items-center justify-center text-lg shrink-0">
+                            <i class="ri-seedling-line"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-sm text-lacd-navy">Livelihoods & Inclusion</h4>
+                            <p class="text-xs text-slate-500 mt-0.5">Conservation agriculture, beekeeping & social inclusion.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call Button & CTA -->
+                <div class="flex flex-wrap items-center gap-6 pt-4">
+                    <a href="{% url 'core:program_list' %}" class="bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-bold px-6 py-3.5 rounded-full shadow-md transition-all">
+                        DISCOVER MORE &rarr;
+                    </a>
+                    <a href="tel:{{ site_settings.contact_phone }}" class="flex items-center gap-3 text-lacd-navy font-bold text-sm hover:text-lacd-green transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-lacd-green text-white flex items-center justify-center shadow">
+                            <i class="ri-phone-fill"></i>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] text-slate-400 uppercase">Call Official Line</span>
+                            <span>{{ site_settings.contact_phone }}</span>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- IMPACT COUNTER RIBBON (DARK GREEN BANNER) -->
+<section id="counter-section" class="py-16 bg-lacd-green text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            
+            <!-- Metric 1 -->
+            <div class="space-y-2 p-4">
+                <div class="w-16 h-16 rounded-2xl bg-white/10 text-lacd-gold mx-auto flex items-center justify-center text-3xl mb-3">
+                    <i class="ri-government-line"></i>
+                </div>
+                <div class="font-heading font-extrabold text-4xl sm:text-5xl text-lacd-gold tracking-tight">
+                    <span class="counter-val" data-target="{{ total_projects }}" data-suffix="+">0</span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-200">Projects Delivered</p>
+            </div>
+
+            <!-- Metric 2 -->
+            <div class="space-y-2 p-4">
+                <div class="w-16 h-16 rounded-2xl bg-white/10 text-lacd-gold mx-auto flex items-center justify-center text-3xl mb-3">
+                    <i class="ri-group-line"></i>
+                </div>
+                <div class="font-heading font-extrabold text-4xl sm:text-5xl text-lacd-gold tracking-tight">
+                    <span class="counter-val" data-target="{{ total_communities }}" data-suffix="+">0</span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-200">Forest-Fringed Communities</p>
+            </div>
+
+            <!-- Metric 3 -->
+            <div class="space-y-2 p-4">
+                <div class="w-16 h-16 rounded-2xl bg-white/10 text-lacd-gold mx-auto flex items-center justify-center text-3xl mb-3">
+                    <i class="ri-water-flash-line"></i>
+                </div>
+                <div class="font-heading font-extrabold text-4xl sm:text-5xl text-lacd-gold tracking-tight">
+                    <span class="counter-val" data-target="{{ total_beehives }}" data-suffix="+">0</span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-200">Beehives Established</p>
+            </div>
+
+            <!-- Metric 4 -->
+            <div class="space-y-2 p-4">
+                <div class="w-16 h-16 rounded-2xl bg-white/10 text-lacd-gold mx-auto flex items-center justify-center text-3xl mb-3">
+                    <i class="ri-trophy-line"></i>
+                </div>
+                <div class="font-heading font-extrabold text-4xl sm:text-5xl text-lacd-gold tracking-tight">
+                    <span class="counter-val" data-target="{{ total_counties }}" data-suffix="">0</span>
+                </div>
+                <p class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-200">Counties Reached</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- LATEST PROGRAMMES & INITIATIVES GRID -->
+<section class="py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header -->
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-amber-900 text-xs font-bold uppercase tracking-wider">
+                <i class="ri-apps-line"></i> OUR PROGRAMMES
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-lacd-navy">
+                Let's Check Our Core Programmes
+            </h2>
+            <p class="text-slate-500 text-sm leading-relaxed">
+                Strategic initiatives in community-based natural resource management, forest governance, livelihoods, and environmental education across Liberia.
+            </p>
+        </div>
+
+        <!-- 3-Card Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for prog in programs %}
+            <div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-md hover-lift flex flex-col group">
+                
+                <!-- Card Header / Icon Banner -->
+                <div class="h-48 bg-gradient-to-br from-lacd-navy to-lacd-green p-6 relative flex items-end">
+                    <div class="absolute top-4 right-4 bg-lacd-gold text-lacd-navy font-bold text-xs px-3 py-1 rounded-full">
+                        {{ prog.get_status_display }}
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md text-lacd-gold flex items-center justify-center text-3xl border border-white/20">
+                        <i class="{{ prog.icon_class }}"></i>
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
+                            <span><i class="ri-map-pin-line text-lacd-gold"></i> {{ prog.get_county_display }}</span>
+                            <span><i class="ri-bank-card-line text-lacd-gold"></i> {{ prog.budget }}</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-lacd-navy group-hover:text-lacd-green transition-colors">
+                            <a href="{% url 'core:program_detail' prog.slug %}">{{ prog.title }}</a>
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            {{ prog.short_description }}
+                        </p>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-lacd-navy">
+                        <span class="text-slate-400 font-normal">Target: {{ prog.target_beneficiaries }}</span>
+                        <a href="{% url 'core:program_detail' prog.slug %}" class="inline-flex items-center gap-1 text-lacd-green hover:text-lacd-gold transition-colors">
+                            <span>View Details</span>
+                            <i class="ri-arrow-right-s-line"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{% url 'core:program_list' %}" class="inline-flex items-center gap-2 bg-lacd-navy hover:bg-lacd-green text-white font-heading font-bold px-8 py-3.5 rounded-full shadow transition-all">
+                <span>View All Programmes</span>
+                <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- COUNTY PROJECT TRACKER PREVIEW SECTION -->
+<section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div class="space-y-2">
+                <span class="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+                    <i class="ri-road-map-line"></i> COUNTY TRACKER
+                </span>
+                <h2 class="text-3xl font-heading font-extrabold text-lacd-navy">Active County Projects</h2>
+            </div>
+            <a href="{% url 'core:project_list' %}" class="text-lacd-green font-bold text-sm flex items-center gap-1 hover:underline">
+                Explore Full Interactive Map & List &rarr;
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for project in projects %}
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/70 shadow-sm hover-lift flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="bg-lacd-navy text-white text-[10px] uppercase font-bold px-2.5 py-1 rounded-md">
+                            {{ project.get_county_display }}
+                        </span>
+                        <span class="text-xs font-bold text-emerald-600 flex items-center gap-1">
+                            <i class="ri-checkbox-circle-fill"></i> {{ project.get_status_display }}
+                        </span>
+                    </div>
+
+                    <h3 class="font-heading font-bold text-lg text-lacd-navy">
+                        <a href="{% url 'core:project_detail' project.slug %}" class="hover:text-lacd-green transition-colors">{{ project.title }}</a>
+                    </h3>
+
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        {{ project.short_description }}
+                    </p>
+                </div>
+
+                <div class="mt-6 space-y-2">
+                    <div class="flex justify-between text-xs font-semibold text-slate-600">
+                        <span>Completion Progress</span>
+                        <span class="text-lacd-green font-bold">{{ project.progress_percentage }}%</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-lacd-green to-lacd-gold rounded-full" style="width: {{ project.progress_percentage }}%;"></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<!-- PROCUREMENT & TENDERS HIGHLIGHT SECTION -->
+<section class="py-20 bg-slate-900 text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="bg-gradient-to-r from-lacd-navy to-lacd-green rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div class="space-y-4 max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lacd-gold text-lacd-navy text-xs font-extrabold uppercase">
+                    <i class="ri-file-list-3-line"></i> OPEN PROCUREMENTS & TENDERS
+                </div>
+                <h2 class="text-3xl font-heading font-extrabold text-white">Do You Want To Partner Or Bid On Agency Contracts?</h2>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    View Requests for Quotation (RFQs), Requests for Proposals (RFPs), and National Competitive Bidding documents published by the PADEV Procurement Unit.
+                </p>
+            </div>
+            <div class="shrink-0 flex flex-col sm:flex-row gap-4">
+                <a href="{% url 'core:procurement_list' %}" class="bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-extrabold px-8 py-4 rounded-full shadow-lg text-center transition-all">
+                    VIEW ACTIVE TENDERS
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEWS & UPDATES SECTION -->
+<section id="news" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header -->
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+            <span class="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+                <i class="ri-news-line"></i> NEWS & UPDATES
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-lacd-navy">
+                Latest From PADEV
+            </h2>
+            <p class="text-slate-500 text-sm leading-relaxed">
+                Field progress updates, announcements, and stories from our work with forest-fringed communities across Liberia.
+            </p>
+        </div>
+
+        <!-- News Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for news in news_list %}
+            <article class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-md hover-lift flex flex-col group">
+                <div class="h-52 overflow-hidden relative">
+                    {% if news.featured_image %}
+                        <img src="{{ news.featured_image.url }}" alt="{{ news.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green"></div>
+                    {% endif %}
+                    <span class="absolute top-4 left-4 bg-lacd-gold text-lacd-navy text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full">{{ news.get_category_display }}</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-bold text-lacd-green uppercase tracking-wide">
+                            <i class="ri-calendar-line"></i> {{ news.published_date|date:"F d, Y" }} | {{ news.author }}
+                        </span>
+                        <h3 class="font-heading font-bold text-lg text-lacd-navy leading-snug group-hover:text-lacd-green transition-colors">{{ news.title }}</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">{{ news.excerpt|truncatechars:150 }}</p>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="col-span-3 text-center py-12 text-slate-500">No news updates available yet.</div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<!-- QUICK CONTACT FORM SECTION -->
+<section id="contact" class="py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-slate-100">
+            
+            <div class="lg:col-span-5 space-y-6">
+                <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-amber-900 text-xs font-bold uppercase tracking-wider">
+                    GET IN TOUCH
+                </span>
+                <h2 class="text-3xl font-heading font-extrabold text-lacd-navy leading-tight">
+                    Have Questions or Project Suggestions?
+                </h2>
+                <p class="text-slate-500 text-sm leading-relaxed">
+                    Contact {{ site_settings.site_name }}. We encourage input from citizens, community leaders, and development partners.
+                </p>
+
+                <div class="space-y-4 pt-4 text-xs font-semibold text-slate-700">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-lacd-green/10 text-lacd-green flex items-center justify-center text-lg">
+                            <i class="ri-map-pin-fill"></i>
+                        </div>
+                        <span>{{ site_settings.address }}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-lacd-green/10 text-lacd-green flex items-center justify-center text-lg">
+                            <i class="ri-phone-fill"></i>
+                        </div>
+                        <span>{{ site_settings.contact_phone }}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-lacd-green/10 text-lacd-green flex items-center justify-center text-lg">
+                            <i class="ri-mail-fill"></i>
+                        </div>
+                        <span>{{ site_settings.contact_email }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="lg:col-span-7">
+                <form action="{% url 'core:home' %}" method="POST" class="space-y-4">
+                    {% csrf_token %}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Full Name *</label>
+                            <input type="text" name="full_name" required placeholder="e.g. John Flomo" class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                            <input type="email" name="email" required placeholder="john@example.com" class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Phone Number</label>
+                            <input type="text" name="phone" placeholder="+231..." class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Subject</label>
+                            <input type="text" name="subject" placeholder="Project inquiry..." class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Message *</label>
+                        <textarea name="message" rows="4" required placeholder="Your detailed message or inquiry..." class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-lacd-green"></textarea>
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-extrabold px-8 py-3.5 rounded-xl shadow-md transition-all">
+                        SEND MESSAGE NOW
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CLIENTS WE WORKED WITH -->
+<section id="clients" class="py-16 bg-lacd-navy text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+            <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-lacd-gold text-xs font-bold uppercase tracking-wider">
+                <i class="ri-handshake-line"></i> OUR PARTNERS
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">Clients We Worked With</h2>
+            <p class="text-slate-300 text-sm leading-relaxed">
+                We are proud to work with national and international partners to deliver community-based natural resource management and conservation across Liberia.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {% for client in clients %}
+            <div class="bg-white rounded-2xl p-6 flex flex-col items-center justify-center gap-4 shadow-lg hover-lift min-h-[140px]">
+                {% if client.logo %}
+                    <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="max-h-16 w-auto object-contain">
+                {% else %}
+                    <div class="w-14 h-14 rounded-2xl bg-lacd-green/10 text-lacd-green flex items-center justify-center text-3xl">
+                        <i class="ri-building-line"></i>
+                    </div>
+                {% endif %}
+                <span class="text-xs font-bold text-lacd-navy text-center leading-snug">{{ client.name }}</span>
+                {% if client.website %}
+                    <a href="{{ client.website }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-bold text-lacd-green hover:text-lacd-gold transition-colors">
+                        Visit Website <i class="ri-external-link-line"></i>
+                    </a>
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-8 text-slate-400">No partners listed yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        new Swiper('.hero-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 4500,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    });
+</script>
+{% endblock %}

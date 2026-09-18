@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+
+{% block title %}{{ procurement.title }} | {{ site_settings.agency_acronym }} Procurement{% endblock %}
+{% block meta_desc %}{{ procurement.meta_description|default:procurement.description|truncatechars:160 }}{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative">
+    <div class="max-w-5xl mx-auto px-4 space-y-4">
+        <a href="{% url 'core:procurement_list' %}" class="inline-flex items-center gap-1 text-xs text-lacd-gold hover:underline mb-2">&larr; Back to Procurement</a>
+        <div class="flex flex-wrap items-center gap-3">
+            <span class="bg-lacd-navy text-lacd-gold font-mono font-bold text-xs px-3 py-1 rounded-md border border-lacd-gold/30">{{ procurement.reference_number }}</span>
+            <span class="bg-amber-100 text-amber-900 text-xs font-bold px-2.5 py-0.5 rounded-full uppercase">{{ procurement.get_category_display }}</span>
+            {% if procurement.status == 'open' %}
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Open for Submission
+            </span>
+            {% else %}
+            <span class="bg-slate-100 text-slate-600 text-xs font-bold px-2.5 py-0.5 rounded-full">{{ procurement.get_status_display }}</span>
+            {% endif %}
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">{{ procurement.title }}</h1>
+        <div class="flex flex-wrap items-center gap-6 text-xs text-slate-300">
+            <span><i class="ri-calendar-event-line text-lacd-gold"></i> Issued: {{ procurement.opening_date }}</span>
+            <span class="text-rose-300 font-bold"><i class="ri-time-line"></i> Deadline: {{ procurement.closing_deadline|date:"F d, Y - H:i" }} GMT</span>
+            <span><i class="ri-eye-line text-lacd-gold"></i> {% get_hit_count for procurement %} views</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 space-y-8">
+        <div class="prose max-w-none text-slate-700 space-y-4 leading-relaxed">
+            <h3 class="text-xl font-heading font-bold text-lacd-navy">Scope of Work & Requirements</h3>
+            <div>{{ procurement.description|linebreaksbr }}</div>
+        </div>
+
+        <!-- Submission Info Card -->
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+            <h3 class="font-heading font-bold text-lacd-navy">Submission Details</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-start gap-3">
+                    <i class="ri-map-pin-line text-lacd-gold mt-0.5"></i>
+                    <div>
+                        <span class="font-semibold text-slate-700">Submission Location</span>
+                        <p class="text-xs text-slate-500">{{ procurement.submission_location }}</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i class="ri-mail-line text-lacd-gold mt-0.5"></i>
+                    <div>
+                        <span class="font-semibold text-slate-700">Contact Email</span>
+                        <p class="text-xs text-slate-500">{{ procurement.contact_email }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download / Action -->
+        <div class="flex flex-col sm:flex-row gap-4">
+            {% if procurement.tender_document %}
+            <a href="{{ procurement.tender_document.url }}" download class="inline-flex items-center justify-center gap-2 bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-bold text-sm px-8 py-4 rounded-xl shadow transition-all">
+                <i class="ri-download-2-line text-base"></i>
+                <span>Download Tender Document (PDF)</span>
+            </a>
+            {% else %}
+            <a href="mailto:{{ procurement.contact_email }}?subject=Document Request: {{ procurement.reference_number }}" class="inline-flex items-center justify-center gap-2 bg-lacd-navy hover:bg-lacd-green text-white font-heading font-bold text-sm px-8 py-4 rounded-xl shadow transition-all">
+                <i class="ri-mail-send-line text-base"></i>
+                <span>Request Document via Email</span>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

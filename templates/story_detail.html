@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+
+{% block title %}{{ story.title }} | {{ site_settings.agency_acronym }} Success Stories{% endblock %}
+{% block meta_desc %}{{ story.meta_description|default:story.quote }}{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative">
+    <div class="max-w-5xl mx-auto px-4 space-y-4">
+        <a href="{% url 'core:home' %}" class="inline-flex items-center gap-1 text-xs text-lacd-gold hover:underline mb-2">&larr; Back to Home</a>
+        <div class="flex flex-wrap items-center gap-3">
+            <span class="bg-lacd-gold text-lacd-navy text-xs font-bold px-3 py-1 rounded-full uppercase">{{ story.get_county_display }}</span>
+            <span class="text-xs text-slate-300"><i class="ri-user-line text-lacd-gold"></i> {{ story.beneficiary_name }}</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">{{ story.title }}</h1>
+        <div class="flex items-center gap-4 text-xs text-slate-300">
+            <span><i class="ri-eye-line text-lacd-gold"></i> {% get_hit_count for story %} views</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 space-y-8">
+        {% if story.featured_image %}
+        <div class="rounded-2xl overflow-hidden shadow-lg">
+            <img src="{{ story.featured_image.url }}" alt="{{ story.title }}" class="w-full h-auto object-cover max-h-[500px]">
+        </div>
+        {% endif %}
+
+        <!-- Quote Highlight -->
+        <div class="bg-lacd-green/5 border-l-4 border-lacd-gold p-6 rounded-r-xl">
+            <i class="ri-double-quotes-l text-lacd-gold text-3xl mb-2 block"></i>
+            <p class="text-lg text-lacd-navy font-heading font-semibold italic leading-relaxed">{{ story.quote }}</p>
+            <span class="text-xs text-slate-500 mt-3 block">&mdash; {{ story.beneficiary_name }}, {{ story.get_county_display }} County</span>
+        </div>
+
+        <div class="prose max-w-none text-slate-700 space-y-4 leading-relaxed">
+            <h3 class="text-xl font-heading font-bold text-lacd-navy">Full Story</h3>
+            <div>{{ story.content|linebreaksbr }}</div>
+        </div>
+    </div>
+</section>
+{% endblock %}

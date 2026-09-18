@@ -1,0 +1,5 @@
+.module h2, .module caption, .inline-group h2 { color: #0B4A3A; }
+#header { background: #0B4A3A; }
+#branding h1, #user-tools a { color: #FFAA00 !important; }
+.button, input[type=submit], .submit-row input { background: #0B4A3A; color: white; }
+.button:hover, input[type=submit]:hover, .submit-row input:hover { background: #073328; }

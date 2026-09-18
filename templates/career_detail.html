@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+
+{% block title %}{{ career.job_title }} | {{ site_settings.agency_acronym }} Careers{% endblock %}
+{% block meta_desc %}{{ career.meta_description|default:career.description|truncatechars:160 }}{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative">
+    <div class="max-w-5xl mx-auto px-4 space-y-4">
+        <a href="{% url 'core:career_list' %}" class="inline-flex items-center gap-1 text-xs text-lacd-gold hover:underline mb-2">&larr; Back to Careers</a>
+        <div class="flex flex-wrap items-center gap-3">
+            <span class="bg-lacd-green/20 text-lacd-gold text-xs font-bold px-3 py-1 rounded-full">{{ career.department }}</span>
+            <span class="bg-amber-100 text-amber-900 text-xs font-bold px-2.5 py-0.5 rounded-full">{{ career.get_job_type_display }}</span>
+            {% if career.reference_number %}
+            <span class="text-xs text-slate-300">Ref: {{ career.reference_number }}</span>
+            {% endif %}
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">{{ career.job_title }}</h1>
+        <div class="flex flex-wrap items-center gap-6 text-xs text-slate-300">
+            <span><i class="ri-map-pin-line text-lacd-gold"></i> {{ career.location }}</span>
+            <span class="text-rose-300 font-bold"><i class="ri-time-line"></i> Deadline: {{ career.application_deadline|date:"F d, Y" }}</span>
+            <span><i class="ri-eye-line text-lacd-gold"></i> {% get_hit_count for career %} views</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 space-y-8">
+        <div class="prose max-w-none text-slate-700 space-y-4 leading-relaxed">
+            <h3 class="text-xl font-heading font-bold text-lacd-navy">Key Responsibilities</h3>
+            <div>{{ career.description|linebreaksbr }}</div>
+        </div>
+
+        <div class="prose max-w-none text-slate-700 space-y-4 leading-relaxed pt-8 border-t border-slate-200">
+            <h3 class="text-xl font-heading font-bold text-lacd-navy">Requirements & Qualifications</h3>
+            <div>{{ career.requirements|linebreaksbr }}</div>
+        </div>
+
+        <!-- Apply Card -->
+        <div class="bg-lacd-green/5 border border-lacd-green/20 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <h4 class="font-heading font-bold text-lacd-navy">Interested in this position?</h4>
+                <p class="text-xs text-slate-500 mt-1">Send your application to <strong>{{ career.contact_email }}</strong> with the reference number in the subject line.</p>
+            </div>
+            <a href="mailto:{{ career.contact_email }}?subject=Application for {{ career.job_title }} ({{ career.reference_number }})" class="shrink-0 inline-flex items-center gap-2 bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-bold text-sm px-8 py-3.5 rounded-xl shadow transition-all">
+                <span>Apply Now via Email</span>
+                <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

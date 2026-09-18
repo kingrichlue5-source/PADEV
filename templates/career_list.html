@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Careers & Employment Vacancies | {{ site_settings.agency_acronym }} Liberia{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative bg-grid-pattern">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+        <span class="bg-lacd-gold text-lacd-navy text-xs font-extrabold uppercase px-3 py-1 rounded-full">JOIN OUR TEAM</span>
+        <h1 class="text-4xl font-heading font-extrabold text-white">Careers at {{ site_settings.site_name }}</h1>
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm">Build a rewarding career empowering forest-fringed communities. We offer roles in community-based natural resource management, conservation, livelihoods, M&E, and administration.</p>
+    </div>
+</section>
+
+<section class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="space-y-6">
+            {% for career in careers %}
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover-lift flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                
+                <div class="space-y-3 max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span class="bg-lacd-green/10 text-lacd-green font-bold text-xs px-3 py-1 rounded-md">
+                            {{ career.department }}
+                        </span>
+                        <span class="bg-amber-100 text-amber-900 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                            {{ career.get_job_type_display }}
+                        </span>
+                        <span class="text-xs text-slate-500">Ref: {{ career.reference_number }}</span>
+                    </div>
+
+                    <h3 class="font-heading font-bold text-xl text-lacd-navy">
+                        {{ career.job_title }}
+                    </h3>
+
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        {{ career.description }}
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-6 text-xs text-slate-500 pt-1">
+                        <span><i class="ri-map-pin-line text-lacd-gold"></i> Location: {{ career.location }}</span>
+                        <span class="text-rose-600 font-bold"><i class="ri-time-line"></i> Deadline: {{ career.application_deadline|date:"F d, Y" }}</span>
+                    </div>
+                </div>
+
+                <div class="shrink-0 flex flex-col gap-2">
+                    <a href="mailto:{{ career.contact_email }}?subject=Application for {{ career.job_title }} ({{ career.reference_number }})" class="inline-flex items-center justify-center gap-2 bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-bold text-xs px-6 py-3.5 rounded-xl shadow transition-all">
+                        <span>Apply Now via Email</span>
+                        <i class="ri-arrow-right-line"></i>
+                    </a>
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="bg-white rounded-2xl p-12 text-center text-slate-500 border border-slate-200">
+                There are currently no active job vacancies. Please check back later.
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+{% endblock %}

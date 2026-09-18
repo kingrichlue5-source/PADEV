@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+
+{% block title %}{{ program.title }} | {{ site_settings.agency_acronym }} Programmes{% endblock %}
+{% block meta_desc %}{{ program.meta_description|default:program.short_description }}{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative">
+    <div class="max-w-5xl mx-auto px-4 space-y-4">
+        <a href="{% url 'core:program_list' %}" class="inline-flex items-center gap-1 text-xs text-lacd-gold hover:underline mb-2">&larr; Back to Programmes</a>
+        <span class="bg-lacd-gold text-lacd-navy text-xs font-bold px-3 py-1 rounded-full uppercase">{{ program.get_status_display }}</span>
+        <h1 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">{{ program.title }}</h1>
+        <div class="flex flex-wrap items-center gap-6 text-xs text-slate-300">
+            <span><i class="ri-map-pin-line text-lacd-gold"></i> {{ program.get_county_display }}</span>
+            <span><i class="ri-bank-card-line text-lacd-gold"></i> {{ program.budget }}</span>
+            <span><i class="ri-group-line text-lacd-gold"></i> {{ program.target_beneficiaries }}</span>
+            <span><i class="ri-eye-line text-lacd-gold"></i> {% get_hit_count for program %} views</span>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 space-y-8">
+        <div class="prose max-w-none text-slate-700 space-y-4 leading-relaxed">
+            <h3 class="text-xl font-heading font-bold text-lacd-navy">Overview</h3>
+            <p>{{ program.description }}</p>
+        </div>
+
+        <!-- Associated County Projects -->
+        <div class="pt-8 border-t border-slate-200 space-y-4">
+            <h3 class="text-xl font-heading font-bold text-lacd-navy">Projects Under This Programme</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for project in program.projects.all %}
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <h4 class="font-heading font-bold text-base text-lacd-navy">
+                        <a href="{% url 'core:project_detail' project.slug %}" class="hover:text-lacd-green">{{ project.title }}</a>
+                    </h4>
+                    <p class="text-xs text-slate-500 mt-1">{{ project.short_description }}</p>
+                </div>
+                {% empty %}
+                <p class="text-xs text-slate-500">No projects currently linked to this programme.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
