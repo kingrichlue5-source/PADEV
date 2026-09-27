@@ -5,6 +5,7 @@ from .views import (
     CareerListView, PublicationListView, ContactView,
     NewsUpdateDetailView, SuccessStoryDetailView,
     PublicationDetailView, ProcurementDetailView, CareerDetailView,
+    HeroSlideDetailView, ProgramStructureDetailView,
 )
 
 app_name = 'core'
@@ -12,6 +13,8 @@ app_name = 'core'
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('team/', TeamView.as_view(), name='team'),
+    path('hero/<slug:slug>/', HeroSlideDetailView.as_view(), name='hero_detail'),
+    path('program-structure/<slug:slug>/', ProgramStructureDetailView.as_view(), name='program_structure_detail'),
     path('programmes/', ProgramListView.as_view(), name='program_list'),
     path('programmes/<slug:slug>/', ProgramDetailView.as_view(), name='program_detail'),
     path('projects/', ProjectListView.as_view(), name='project_list'),

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ card.title }} | {{ site_settings.agency_acronym }}{% endblock %}
+{% block meta_desc %}{{ card.description|truncatewords:30 }}{% endblock %}
+
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative overflow-hidden bg-grid-pattern">
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-lacd-gold/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 -left-24 w-72 h-72 bg-lacd-green/30 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 space-y-4 relative z-10">
+        <a href="{% url 'core:home' %}" class="inline-flex items-center gap-1 text-xs text-lacd-gold hover:underline">&larr; Back to Home</a>
+        <div class="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-2xl text-lacd-gold">
+            <i class="{{ card.icon_class }}"></i>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">{{ card.title }}</h1>
+        <p class="text-slate-300 text-base sm:text-lg max-w-3xl leading-relaxed">{{ card.description }}</p>
+    </div>
+</section>
+
+<section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-4 space-y-8">
+        <div class="prose max-w-none text-slate-700 leading-relaxed">
+            {% if card.detail_content %}
+                {{ card.detail_content|linebreaks }}
+            {% else %}
+                <p>{{ card.description }}</p>
+                <p class="text-slate-500 text-sm">More details on this focus area are being prepared. Please check back soon.</p>
+            {% endif %}
+        </div>
+
+        <div class="pt-6 border-t border-slate-200 flex flex-wrap gap-4">
+            <a href="{% url 'core:home' %}" class="inline-flex items-center gap-2 bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-extrabold text-sm px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all">
+                <i class="ri-arrow-left-line"></i> <span>BACK TO HOME</span>
+            </a>
+            <a href="{% url 'core:program_list' %}" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-lacd-navy font-heading font-bold text-sm px-6 py-3 rounded-full border border-slate-200 transition-all">
+                <span>VIEW ALL PROGRAMMES</span> <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

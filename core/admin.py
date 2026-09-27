@@ -87,17 +87,16 @@ class NavigationMenuAdmin(ModelAdmin):
 class HeroSlideAdmin(ModelAdmin):
     list_display = ('title', 'badge_text', 'order', 'display_status')
     list_filter = ('is_active',)
-    search_fields = ('title', 'description', 'badge_text')
+    search_fields = ('title', 'description', 'badge_text', 'detail_content')
+    prepopulated_fields = {'slug': ('title',)}
     list_editable = ('order',)
     fieldsets = (
         ('Slide Content', {
-            'fields': ('badge_text', 'title', 'description', 'slide_image'),
+            'fields': ('badge_text', 'title', 'slug', 'description', 'slide_image'),
         }),
-        ('Call to Action', {
-            'fields': (
-                ('primary_cta_text', 'primary_cta_url'),
-                ('secondary_cta_text', 'secondary_cta_url'),
-            ),
+        ('Read More Page', {
+            'fields': ('detail_content',),
+            'description': 'The full article opened by the "Read More" button on the homepage. Start a new paragraph on a new line.',
         }),
         ('Settings', {
             'fields': ('order', 'is_active'),
@@ -121,12 +120,17 @@ class HeroSlideAdmin(ModelAdmin):
 class ProgramStructureAdmin(ModelAdmin):
     list_display = ('title', 'display_theme', 'icon_class', 'order', 'is_active')
     list_filter = ('theme', 'is_active')
-    search_fields = ('title', 'description')
+    search_fields = ('title', 'description', 'detail_content')
+    prepopulated_fields = {'slug': ('title',)}
     list_editable = ('order', 'is_active')
     compressed_fields = True
     fieldsets = (
         ('Card Content', {
-            'fields': ('title', 'description', 'icon_class'),
+            'fields': ('title', 'slug', 'description', 'icon_class'),
+        }),
+        ('Details Page', {
+            'fields': ('detail_content',),
+            'description': 'The full article opened when the card title is clicked on the homepage. Start a new paragraph on a new line.',
         }),
         ('Appearance', {
             'fields': ('theme',),

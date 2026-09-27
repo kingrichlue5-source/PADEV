@@ -67,8 +67,12 @@
                                         <h3 class="text-white font-heading font-bold text-lg">{{ slide.title }}</h3>
                                         {% if slide.description %}<p class="text-sm text-slate-200 max-w-md">{{ slide.description }}</p>{% endif %}
                                         <div class="flex flex-wrap gap-3 pt-2">
-                                            {% if slide.primary_cta_text %}<a href="{{ slide.primary_cta_url }}" class="bg-lacd-gold text-lacd-navy px-4 py-2 rounded-full text-sm font-bold">{{ slide.primary_cta_text }}</a>{% endif %}
-                                            {% if slide.secondary_cta_text %}<a href="{{ slide.secondary_cta_url }}" class="bg-white/10 text-white px-4 py-2 rounded-full text-sm font-semibold border border-white/20">{{ slide.secondary_cta_text }}</a>{% endif %}
+                                            {% if slide.slug %}
+                                            <a href="{{ slide.get_absolute_url }}" class="inline-flex items-center gap-1.5 bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy px-4 py-2 rounded-full text-sm font-bold transition-colors">
+                                                <span>Read More</span>
+                                                <i class="ri-arrow-right-line"></i>
+                                            </a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +112,13 @@
                 </div>
                 <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">{{ forloop.counter|stringformat:"02d" }}</span>
             </div>
-            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">{{ card.title }}</h4>
+            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">
+                {% if card.slug %}
+                <a href="{{ card.get_absolute_url }}" class="hover:text-lacd-gold transition-colors">{{ card.title }}</a>
+                {% else %}
+                {{ card.title }}
+                {% endif %}
+            </h4>
             <p class="text-xs text-slate-500 leading-relaxed">{{ card.description }}</p>
         </div>
         {% endfor %}

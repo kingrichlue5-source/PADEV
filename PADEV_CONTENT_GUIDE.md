@@ -44,13 +44,12 @@ Please confirm the following:
 
 ### B. Homepage hero slides
 
-The homepage carousel supports multiple slides. For each slide, provide:
+The homepage carousel supports multiple slides. Each slide shows a badge, headline, short description, image, and a **Read More** button that opens the slide's own detail page. For each slide, provide:
 
 - Short badge or category label.
 - Main headline.
-- Supporting description.
-- Primary button label and destination.
-- Optional secondary button label and destination.
+- Supporting description (one or two sentences shown on the homepage).
+- Full article text for the Read More page.
 - One strong landscape or activity photograph.
 
 Recommended writing format:
@@ -59,8 +58,7 @@ Recommended writing format:
 Badge: Conservation in Action
 Headline: Protecting Liberia's Forests with Communities
 Description: Two or three sentences explaining the work, location, and benefit.
-Primary button: Explore Our Work -> /projects/
-Secondary button: Contact PADEV -> /contact/
+Read More article: The full story in three to five short paragraphs. Start a new paragraph on a new line.
 Image: filename.jpg
 ```
 
@@ -225,7 +223,7 @@ The administration panel contains these manageable sections:
 
 1. **Site Settings:** name, acronym, logo, contact details, address, and social links. This is a single organization-wide record.
 2. **Navigation Menus:** menu labels, URLs, ordering, badges, and child menu items.
-3. **Hero Slides:** homepage carousel content, images, buttons, order, and active state.
+3. **Hero Slides:** homepage carousel content, images, the full article behind each Read More button, order, and active state.
 4. **Program Structure:** the four floating homepage cards below the hero — heading, short copy, icon, colour theme, order, and active state.
 5. **Development Programmes:** programme descriptions, locations, dates, budgets, beneficiaries, and featured state.
 6. **County Projects:** project details, status, progress, dates, partners, and featured state.
@@ -328,15 +326,15 @@ Optional: `logo`, `social_links`, and `hero_background_image`. Social links shou
 
 ### Homepage hero slides
 
-Required: `title`, primary CTA text, primary CTA URL, display `order`, and `is_active`.
+Required: `title`, display `order`, and `is_active`.
 
-Optional: badge text, description, slide image, secondary CTA text, and secondary CTA URL. Use internal paths such as `/programmes/`, `/projects/`, `/team/`, or `/contact/` for internal links.
+Optional: badge text, description, slide image, `slug`, and `detail_content` (the full article opened by the Read More button; new paragraphs start on a new line). Button labels and destinations are fixed: every slide has one Read More button that opens that slide's own detail page, so no URL is required.
 
 ### Program structure cards
 
 Required: `title`, `description` (maximum 300 characters), and `is_active`.
 
-Optional: `icon_class` (Remix icon such as `ri-tree-line`), `theme` (one of `green`, `gold`, `navy`, `rose`), and `order`. Cards are numbered `01`, `02`, … automatically by display order. The grid shows up to four cards per row and hides itself when no card is active.
+Optional: `detail_content` (the full article opened when the title is clicked; new paragraphs start on a new line), `icon_class` (Remix icon such as `ri-tree-line`), `theme` (one of `green`, `gold`, `navy`, `rose`), `slug`, and `order`. Cards are numbered `01`, `02`, … automatically by display order. The grid shows up to four cards per row and hides itself when no card is active. The card title is a link; when `detail_content` is empty the page repeats the short description instead.
 
 ### Programmes
 
@@ -427,7 +425,8 @@ Use one row per record and keep these field names unchanged. Put long descriptio
 
 ```text
 Program: title | icon_class | short_description | description | status | county | budget | target_beneficiaries | start_date | end_date | is_featured | meta_description | cover_image
-ProgramStructure: title | description | icon_class | theme | order | is_active
+ProgramStructure: title | description | detail_content | icon_class | theme | order | is_active
+HeroSlide: badge_text | title | description | detail_content | slide_image | order | is_active
 Project: title | program_title | short_description | description | status | county | location_details | progress_percentage | budget | contractor | start_date | completion_date | is_featured | meta_description | cover_image
 News: title | author | category | excerpt | content_file | approved_publication_date | is_featured | meta_description | featured_image
 Story: title | beneficiary_name | county | quote | content_file | consent_reference | is_featured | meta_description | featured_image

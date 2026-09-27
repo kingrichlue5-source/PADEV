@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 from core.sitemaps import (
     ProgramSitemap, ProjectSitemap, NewsUpdateSitemap,
     SuccessStorySitemap, PublicationSitemap, ProcurementSitemap, CareerSitemap,
+    HeroSlideSitemap, ProgramStructureSitemap,
 )
 
 sitemaps = {
@@ -32,6 +33,8 @@ sitemaps = {
     'publications': PublicationSitemap(),
     'procurements': ProcurementSitemap(),
     'careers': CareerSitemap(),
+    'hero_slides': HeroSlideSitemap(),
+    'program_structure': ProgramStructureSitemap(),
 }
 
 urlpatterns = [

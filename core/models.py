@@ -63,12 +63,10 @@ class NavigationMenu(models.Model):
 class HeroSlide(models.Model):
     badge_text = models.CharField(max_length=100, blank=True)
     title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, max_length=255, blank=True)
     description = models.TextField(blank=True)
+    detail_content = models.TextField(blank=True, help_text="Full article shown on this slide's Read More page (new paragraphs start on a new line)")
     slide_image = models.ImageField(upload_to='hero/', blank=True, null=True)
-    primary_cta_text = models.CharField(max_length=100, default='Learn More')
-    primary_cta_url = models.CharField(max_length=255, default='#')
-    secondary_cta_text = models.CharField(max_length=100, blank=True)
-    secondary_cta_url = models.CharField(max_length=255, blank=True)
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -77,6 +75,14 @@ class HeroSlide(models.Model):
         ordering = ['order', 'created_at']
         verbose_name = 'Hero Slide'
         verbose_name_plural = 'Hero Slides'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('core:hero_detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title
@@ -101,7 +107,9 @@ class ProgramStructure(models.Model):
     }
 
     title = models.CharField(max_length=200, help_text="Card heading e.g. Community Forest Governance")
+    slug = models.SlugField(unique=True, max_length=200, blank=True)
     description = models.TextField(max_length=300, help_text="Short copy shown under the heading")
+    detail_content = models.TextField(blank=True, help_text="Full article shown when the card title is clicked (new paragraphs start on a new line)")
     icon_class = models.CharField(max_length=100, default='ri-leaf-line', help_text="Remix icon class name e.g. ri-tree-line")
     theme = models.CharField(max_length=20, choices=THEME_CHOICES, default='green')
     order = models.PositiveIntegerField(default=0)
@@ -116,6 +124,14 @@ class ProgramStructure(models.Model):
     @property
     def icon_box_classes(self):
         return self.THEME_STYLES.get(self.theme, self.THEME_STYLES['green'])
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('core:program_structure_detail', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title

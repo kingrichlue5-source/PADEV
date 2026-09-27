@@ -2,6 +2,7 @@ from django.contrib.sitemaps import Sitemap
 from .models import (
     Program, Project, NewsUpdate, SuccessStory,
     Publication, ProcurementOpportunity, Career,
+    HeroSlide, ProgramStructure,
 )
 
 
@@ -77,6 +78,28 @@ class CareerSitemap(Sitemap):
 
     def items(self):
         return Career.objects.filter(is_active=True)
+
+    def lastmod(self, obj):
+        return obj.created_at
+
+
+class HeroSlideSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.6
+
+    def items(self):
+        return HeroSlide.objects.filter(is_active=True)
+
+    def lastmod(self, obj):
+        return obj.created_at
+
+
+class ProgramStructureSitemap(Sitemap):
+    changefreq = "monthly"
+    priority = 0.5
+
+    def items(self):
+        return ProgramStructure.objects.filter(is_active=True)
 
     def lastmod(self, obj):
         return obj.created_at

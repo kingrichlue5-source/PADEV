@@ -244,6 +244,28 @@ class CareerDetailView(HitCountDetailView):
     count_hit = True
 
 
+class HeroSlideDetailView(HitCountDetailView):
+    """Full 'Read More' article for a homepage hero slide."""
+    model = HeroSlide
+    template_name = 'hero_detail.html'
+    context_object_name = 'slide'
+    count_hit = True
+
+    def get_queryset(self):
+        return HeroSlide.objects.filter(is_active=True)
+
+
+class ProgramStructureDetailView(HitCountDetailView):
+    """Full article for a homepage Program Structure card."""
+    model = ProgramStructure
+    template_name = 'program_structure_detail.html'
+    context_object_name = 'card'
+    count_hit = True
+
+    def get_queryset(self):
+        return ProgramStructure.objects.filter(is_active=True)
+
+
 class ContactView(TemplateView):
     template_name = 'contact.html'
 
