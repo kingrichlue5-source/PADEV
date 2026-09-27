@@ -20,6 +20,59 @@ class SiteSetting(models.Model):
             "to show them in the gold gradient. Leave blank to hide the headline."
         ),
     )
+    about_heading = models.CharField(
+        max_length=150,
+        default='About PADEV',
+        help_text="Title shown at the top of the About Us page",
+    )
+    about_intro = models.CharField(
+        max_length=300,
+        default=(
+            "A registered, accredited and recognized Liberian organization contributing to "
+            "national development through community-based natural resource management."
+        ),
+        help_text="One-line summary under the About Us page title",
+    )
+    about_content = models.TextField(
+        default=(
+            "PADEV is a registered fiduciary, accredited and recognized Liberian organization "
+            "founded almost a decade ago to contribute to national development. Our work broadly "
+            "focuses on community-based natural resource management (CBNRM).\n\n"
+            "**Where are we located, where do we work and what do we do?**\n\n"
+            "- PADEV is situated in Sophie Community, Congo Town, Montserrado, Liberia. We operate "
+            "regional offices on a need basis.\n"
+            "- PADEV has footprints in over 100 forest-dependent communities across rural Liberia, "
+            "where it has implemented and continues to carry out integrative and gender-responsive "
+            "capacity building projects in forest governance, sustainable livelihoods, strategic "
+            "communication and stakeholder engagement.\n"
+            "- Our work engenders social change and addresses poverty and inequality in "
+            "underserved communities in Liberia's northwest and southeastern priority landscapes.\n"
+            "- In the last 10 years, our organization has administered over US$4m in grants and "
+            "other funds.\n\n"
+            "**Leadership**\n\n"
+            "PADEV is widely recognized among national Civil Society Organizations (CSOs) and "
+            "Non-Governmental Organizations (NGOs) for its commanding leadership and demonstrated "
+            "collaborative management expertise within the Community-Based Natural Resource "
+            "Management (CBNRM) sector.\n\n"
+            "Our leadership quality is proven by our track record of managing high-stakes "
+            "partnerships and sector-wide initiatives:\n\n"
+            "- **High-Impact Event Leadership:** In 2023, PADEV led a consortium of four national "
+            "NGOs — including The Nature Compact (TNC), Eddie Theatre Production (ETP), and "
+            "Greenlife West Africa (GWA) — to organize the first-ever World Bank-funded Liberia "
+            "Forest Forum, which achieved resounding success.\n"
+            "- **Consortium Program Management:** In 2024, PADEV spearheaded a two-organization "
+            "consortium alongside the Rural Integrated Center for Community Empowerment (RICCE) to "
+            "successfully implement the first phase of the UNDP-supported Community-Based Forestry "
+            "and Protected Area Management (CBFM) project.\n"
+            "- **Ongoing Sector Governance:** PADEV currently hosts and facilitates the Secretariat "
+            "of the Community Forestry Working Group (CFWG), driving continuous collaboration and "
+            "policy advocacy across the sector."
+        ),
+        help_text=(
+            "Body of the About Us page. Blank line = new paragraph, a line starting with - is a "
+            "bullet, and words wrapped in ** are bold."
+        ),
+    )
     program_structure_heading = models.CharField(
         max_length=120,
         default='Program Structure',

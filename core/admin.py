@@ -50,6 +50,10 @@ class SiteSettingAdmin(ModelAdmin):
             'fields': ('program_structure_heading', 'program_structure_intro'),
             'description': 'Heading and introduction shown above the Program Structure cards on the homepage. The cards themselves are managed under "Program Structure".',
         }),
+        ('About Us Page', {
+            'fields': ('about_heading', 'about_intro', 'about_content'),
+            'description': 'Title, one-line summary and body of the About Us page. In the body: a blank line starts a new paragraph, a line beginning with - is a bullet, and words wrapped in ** are bold.',
+        }),
         ('Contact & Social', {'fields': ('contact_email', 'contact_phone', 'address', 'social_links')}),
     )
     compressed_fields = True

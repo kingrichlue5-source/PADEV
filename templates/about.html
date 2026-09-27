@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load content_tags %}
+{% block title %}About Us | {{ site_settings.agency_acronym }} Liberia{% endblock %}
+{% block content %}
+<section class="py-16 bg-lacd-navy text-white relative bg-grid-pattern">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+        <span class="bg-lacd-gold text-lacd-navy text-xs font-extrabold uppercase px-3 py-1 rounded-full">About Us</span>
+        <h1 class="text-4xl font-heading font-extrabold text-white">{{ site_settings.about_heading }}</h1>
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm">{{ site_settings.about_intro }}</p>
+    </div>
+</section>
+
+<section class="py-20 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10">
+            <div class="prose max-w-none text-slate-700 space-y-4 leading-relaxed">
+                <div class="article-body">{{ site_settings.about_content|rich_text }}</div>
+            </div>
+        </div>
+
+        <div class="mt-10 flex flex-wrap gap-4">
+            <a href="{% url 'core:team' %}" class="bg-lacd-navy hover:bg-black text-white font-heading font-bold px-6 py-3.5 rounded-full transition-all">
+                Meet Our Team &rarr;
+            </a>
+            <a href="{% url 'core:contact' %}" class="bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-bold px-6 py-3.5 rounded-full transition-all">
+                Get In Touch &rarr;
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

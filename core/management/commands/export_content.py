@@ -90,6 +90,9 @@ SPECS = (
             ('hero_text', _raw('hero_text')),
             ('program_structure_heading', _raw('program_structure_heading')),
             ('program_structure_intro', _raw('program_structure_intro')),
+            ('about_heading', _raw('about_heading')),
+            ('about_intro', _raw('about_intro')),
+            ('about_content', _raw('about_content')),
         ),
     },
     {

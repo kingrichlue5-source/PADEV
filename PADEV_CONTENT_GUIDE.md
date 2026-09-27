@@ -11,7 +11,7 @@
 The prototype is a public-facing PADEV information portal with these main areas:
 
 - Home: organization overview, hero messages, the Program Structure section and its cards, impact figures, all published programmes, featured projects, partner logos, stories, and latest updates.
-- About PADEV: mission, background, strategic focus, and organizational information.
+- About PADEV (`/about/`): organization summary, location and reach, and leadership record — all editable in **Site Settings → About Us Page**.
 - Our Team: founders, board members, and management team profiles.
 - Programmes: strategic areas of work, with individual programme detail pages.
 - Projects: project tracker with status, county, progress, partners, dates, and results.
@@ -225,7 +225,7 @@ Remove vacancies promptly after the deadline or mark them inactive in the admin 
 
 The administration panel contains these manageable sections:
 
-1. **Site Settings:** name, acronym, logo, contact details, address, social links, the homepage hero background image and **Hero Text** headline, and the Program Structure heading and introduction. This is a single organization-wide record.
+1. **Site Settings:** name, acronym, logo, contact details, address, social links, the homepage hero background image and **Hero Text** headline, the Program Structure heading and introduction, and the **About Us page** title, summary and body. This is a single organization-wide record.
 2. **Navigation Menus:** menu labels, URLs, ordering, badges, and child menu items.
 3. **Hero Slides:** homepage carousel content, images, the full article behind each Read More button, order, and active state.
 4. **Program Structure:** the homepage cards that float below the hero — title, short copy, full detail article, icon, colour theme, order, and active state. The section heading and introduction are edited in **Site Settings → Program Structure Section** and shown above the cards on the dark hero background. The cards appear only when at least one is active, so the heading disappears with them.
@@ -326,7 +326,7 @@ This section is aligned with the current Django models and should be used as the
 
 Required: `site_name`, `agency_acronym`, `contact_email`, `contact_phone`, and `address`.
 
-Optional: `logo`, `social_links`, `hero_background_image`, `hero_text` (the homepage headline — start a new line for a line break and wrap words in `**` to show them in the gold gradient, for example `Start Your Community's` on the first line and `**Beautiful & Bright** Future.` on the second; leave it blank to hide the headline), and the **Program Structure Section** pair: `program_structure_heading` (default `Program Structure`) and `program_structure_intro` (the introduction shown above the homepage cards; leave blank to hide it). Social links should be supplied as label and URL pairs using labels such as `facebook`, `instagram`, `twitter`, `linkedin`, or `youtube`.
+Optional: `logo`, `social_links`, `hero_background_image`, `hero_text` (the homepage headline — start a new line for a line break and wrap words in `**` to show them in the gold gradient, for example `Start Your Community's` on the first line and `**Beautiful & Bright** Future.` on the second; leave it blank to hide the headline), and the **Program Structure Section** pair: `program_structure_heading` (default `Program Structure`) and `program_structure_intro` (the introduction shown above the homepage cards; leave blank to hide it), and the **About Us Page** trio: `about_heading` (page title, default `About PADEV`), `about_intro` (the one-line summary under the title) and `about_content` (the page body — a blank line starts a new paragraph, a line beginning with `-` is a bullet, and `**words**` are bold, as in the other rich text fields). Social links should be supplied as label and URL pairs using labels such as `facebook`, `instagram`, `twitter`, `linkedin`, or `youtube`.
 
 ### Homepage hero slides
 
@@ -414,7 +414,7 @@ Optional: reference number and SEO meta description (maximum 160 characters). Al
 
 ### Navigation menu items
 
-Required: visible title, destination URL, display order, and active decision. Optional: parent menu item and badge text. Suggested launch links are Home `/`, About Us `/#about`, Our Team `/team/`, Programmes `/programmes/`, Projects `/projects/`, Publications `/publications/`, Procurement `/procurement/`, Careers `/careers/`, and Contact Us `/contact/`.
+Required: visible title, destination URL, display order, and active decision. Optional: parent menu item and badge text. Suggested launch links are Home `/`, About Us `/about/`, Our Team `/team/`, Programmes `/programmes/`, Projects `/projects/`, Publications `/publications/`, Procurement `/procurement/`, Careers `/careers/`, and Contact Us `/contact/`.
 
 ### Contact submissions
 
@@ -425,7 +425,7 @@ Visitors create these records; PADEV does not need to prepare them. The form req
 Provide final approved copy, or confirm that the current wording may remain, for:
 
 - Homepage introductory paragraph and CTA labels. The hero headline is editable: it is the **Hero Text** field in **Site Settings → Hero Section**.
-- About section heading, organization summary, highlights, and founding-year statement.
+- Homepage About section: heading, organization summary, highlights, and founding-year statement. The About Us page itself is editable: **Site Settings → About Us Page** holds its title (`about_heading`), one-line summary (`about_intro`) and body (`about_content`).
 - Homepage impact figures: projects delivered, forest-fringed communities, beehives established, and counties reached. The current view uses the project count plus fixed values of `100`, `190`, and `15`; approve the exact figures and the `+` suffix.
 - Homepage introductions for programmes, projects, procurement, news, and contact.
 - Footer organization description and privacy, safeguarding, copyright, or legal links.

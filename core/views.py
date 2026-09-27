@@ -101,6 +101,10 @@ class HomeView(TemplateView):
             return self.get(request, *args, **kwargs)
 
 
+class AboutView(TemplateView):
+    template_name = 'about.html'
+
+
 class TeamView(TemplateView):
     template_name = 'team.html'
 

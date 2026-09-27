@@ -38,7 +38,7 @@ class Command(BaseCommand):
         # ─── Navigation Menus ───
         nav_defs = [
             ('Home', '/', 1),
-            ('About Us', '/#about', 2),
+            ('About Us', '/about/', 2),
             ('Our Team', '/team/', 3),
             ('Programmes', '/programmes/', 4),
             ('Projects', '/projects/', 5),
