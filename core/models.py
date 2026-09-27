@@ -128,6 +128,78 @@ class SiteSetting(models.Model):
         default='Driven by specialized expertise, Partners in Development delivers impactful solutions across four core areas: Forest Governance, Livelihood & Enterprise Development, Strategic Communication, and Stakeholder Engagement.',
         help_text="Introduction shown under the heading on the homepage. Leave blank to hide it.",
     )
+    home_about_badge = models.CharField(
+        max_length=60,
+        blank=True,
+        default='ABOUT US',
+        help_text="Label above the homepage About heading. Leave blank to hide it.",
+    )
+    home_about_heading = models.CharField(
+        max_length=200,
+        blank=True,
+        default='Building Alliances to Mitigate Global Environmental Challenges.',
+        help_text="Heading of the homepage About section. Leave blank to hide it.",
+    )
+    home_about_text = models.TextField(
+        blank=True,
+        default=(
+            "Founded in August 2016, Partners in Development (PADEV) is a leading national "
+            "institution that builds its intervention on the collective competence of its diverse "
+            "professionals — delivering community-based natural resource management, forest "
+            "conservation, and livelihood development across over 100 forest-fringed communities "
+            "in Liberia."
+        ),
+        help_text=(
+            "Introduction paragraph of the homepage About section. Blank line = new paragraph, "
+            "and words wrapped in ** are bold. Leave blank to hide it."
+        ),
+    )
+    home_about_badge_year = models.CharField(
+        max_length=40,
+        blank=True,
+        default='Since 2016',
+        help_text="Large text in the gold badge over the photos, e.g. Since 2016. Leave blank to hide the badge.",
+    )
+    home_about_badge_label = models.CharField(
+        max_length=80,
+        blank=True,
+        default='Community-Based Development',
+        help_text="Small caption under the badge text.",
+    )
+    home_about_highlight_1_title = models.CharField(
+        max_length=100,
+        blank=True,
+        default='Conservation & Governance',
+        help_text="Title of the first highlight box. Leave both boxes' fields blank to hide a box.",
+    )
+    home_about_highlight_1_text = models.CharField(
+        max_length=200,
+        blank=True,
+        default='Community forest governance & protected area support.',
+        help_text="Text of the first highlight box.",
+    )
+    home_about_highlight_2_title = models.CharField(
+        max_length=100,
+        blank=True,
+        default='Livelihoods & Inclusion',
+        help_text="Title of the second highlight box. Leave both boxes' fields blank to hide a box.",
+    )
+    home_about_highlight_2_text = models.CharField(
+        max_length=200,
+        blank=True,
+        default='Conservation agriculture, beekeeping & social inclusion.',
+        help_text="Text of the second highlight box.",
+    )
+    home_about_image_1 = models.ImageField(
+        upload_to='site/',
+        blank=True,
+        help_text="Left photo of the homepage About collage. Portrait or square photo works best. Until one is uploaded, a placeholder photo is shown.",
+    )
+    home_about_image_2 = models.ImageField(
+        upload_to='site/',
+        blank=True,
+        help_text="Right photo of the homepage About collage. Until one is uploaded, a placeholder photo is shown.",
+    )
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

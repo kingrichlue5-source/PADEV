@@ -151,6 +151,7 @@
 {% endif %}
 
 <!-- ABOUT SPLIT SECTION (EDUKA STYLE) -->
+{% if site_settings.home_about_heading or site_settings.home_about_text or site_settings.home_about_badge_year or site_settings.home_about_highlight_1_title or site_settings.home_about_highlight_1_text or site_settings.home_about_highlight_2_title or site_settings.home_about_highlight_2_text or site_settings.home_about_image_1 or site_settings.home_about_image_2 %}
 <section id="about" class="py-24 bg-white relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -158,58 +159,82 @@
             <!-- Left Frame Collage with Gold Badge -->
             <div class="lg:col-span-6 relative">
                 <div class="grid grid-cols-2 gap-4 items-center">
-                    <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Liberian Community Education" class="rounded-3xl shadow-lg w-full h-64 object-cover">
-                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Community Farmers Meeting" class="rounded-3xl shadow-lg w-full h-80 object-cover -mt-6">
+                    <img src="{% if site_settings.home_about_image_1 %}{{ site_settings.home_about_image_1.url }}{% else %}https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80{% endif %}" alt="{{ site_settings.home_about_heading|default:'Community-Based Development' }}" class="rounded-3xl shadow-lg w-full h-64 object-cover">
+                    <img src="{% if site_settings.home_about_image_2 %}{{ site_settings.home_about_image_2.url }}{% else %}https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80{% endif %}" alt="{{ site_settings.home_about_badge_label|default:'Community-Based Development' }}" class="rounded-3xl shadow-lg w-full h-80 object-cover -mt-6">
                 </div>
 
+                {% if site_settings.home_about_badge_year %}
                 <!-- Gold Accent Years Experience Badge -->
                 <div class="absolute -bottom-6 left-6 bg-lacd-gold text-lacd-navy p-6 rounded-2xl shadow-xl flex items-center gap-4 max-w-xs border-2 border-white">
                     <div class="w-12 h-12 rounded-xl bg-lacd-navy text-lacd-gold flex items-center justify-center text-2xl font-bold shrink-0">
                         <i class="ri-award-fill"></i>
                     </div>
                     <div>
-                        <span class="font-heading font-extrabold text-xl leading-tight block">Since 2016</span>
-                        <span class="text-xs font-semibold uppercase tracking-wider">Community-Based Development</span>
+                        <span class="font-heading font-extrabold text-xl leading-tight block">{{ site_settings.home_about_badge_year }}</span>
+                        {% if site_settings.home_about_badge_label %}
+                        <span class="text-xs font-semibold uppercase tracking-wider">{{ site_settings.home_about_badge_label }}</span>
+                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
             </div>
 
             <!-- Right Content -->
             <div class="lg:col-span-6 space-y-6">
+                {% if site_settings.home_about_badge %}
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lacd-gold/15 text-amber-800 text-xs font-bold uppercase tracking-wider">
-                    <i class="ri-shield-star-line"></i> ABOUT US
+                    <i class="ri-shield-star-line"></i> {{ site_settings.home_about_badge }}
                 </div>
+                {% endif %}
 
+                {% if site_settings.home_about_heading %}
                 <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-lacd-navy leading-tight">
-                    Building Alliances to Mitigate Global Environmental Challenges.
+                    {{ site_settings.home_about_heading }}
                 </h2>
+                {% endif %}
 
-                <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    Founded in August 2016, Partners in Development (PADEV) is a leading national institution that builds its intervention on the collective competence of its diverse professionals — delivering community-based natural resource management, forest conservation, and livelihood development across over 100 forest-fringed communities in Liberia.
-                </p>
+                {% if site_settings.home_about_text %}
+                <div class="text-slate-600 text-sm sm:text-base leading-relaxed article-body">
+                    {{ site_settings.home_about_text|rich_text }}
+                </div>
+                {% endif %}
 
+                {% if site_settings.home_about_highlight_1_title or site_settings.home_about_highlight_1_text or site_settings.home_about_highlight_2_title or site_settings.home_about_highlight_2_text %}
                 <!-- Two Highlight Boxes -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    {% if site_settings.home_about_highlight_1_title or site_settings.home_about_highlight_1_text %}
                     <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
                         <div class="w-10 h-10 rounded-lg bg-lacd-green text-lacd-gold flex items-center justify-center text-lg shrink-0">
                             <i class="ri-tree-line"></i>
                         </div>
                         <div>
-                            <h4 class="font-heading font-bold text-sm text-lacd-navy">Conservation & Governance</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">Community forest governance & protected area support.</p>
+                            {% if site_settings.home_about_highlight_1_title %}
+                            <h4 class="font-heading font-bold text-sm text-lacd-navy">{{ site_settings.home_about_highlight_1_title }}</h4>
+                            {% endif %}
+                            {% if site_settings.home_about_highlight_1_text %}
+                            <p class="text-xs text-slate-500 mt-0.5">{{ site_settings.home_about_highlight_1_text }}</p>
+                            {% endif %}
                         </div>
                     </div>
+                    {% endif %}
 
+                    {% if site_settings.home_about_highlight_2_title or site_settings.home_about_highlight_2_text %}
                     <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
                         <div class="w-10 h-10 rounded-lg bg-lacd-navy text-lacd-gold flex items-center justify-center text-lg shrink-0">
                             <i class="ri-seedling-line"></i>
                         </div>
                         <div>
-                            <h4 class="font-heading font-bold text-sm text-lacd-navy">Livelihoods & Inclusion</h4>
-                            <p class="text-xs text-slate-500 mt-0.5">Conservation agriculture, beekeeping & social inclusion.</p>
+                            {% if site_settings.home_about_highlight_2_title %}
+                            <h4 class="font-heading font-bold text-sm text-lacd-navy">{{ site_settings.home_about_highlight_2_title }}</h4>
+                            {% endif %}
+                            {% if site_settings.home_about_highlight_2_text %}
+                            <p class="text-xs text-slate-500 mt-0.5">{{ site_settings.home_about_highlight_2_text }}</p>
+                            {% endif %}
                         </div>
                     </div>
+                    {% endif %}
                 </div>
+                {% endif %}
 
                 <!-- Call Button & CTA -->
                 <div class="flex flex-wrap items-center gap-6 pt-4">
@@ -232,6 +257,7 @@
         </div>
     </div>
 </section>
+{% endif %}
 
 <!-- IMPACT COUNTER RIBBON (DARK GREEN BANNER) -->
 <section id="counter-section" class="py-16 bg-lacd-green text-white relative overflow-hidden">

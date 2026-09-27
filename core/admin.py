@@ -50,6 +50,21 @@ class SiteSettingAdmin(ModelAdmin):
             'fields': ('program_structure_heading', 'program_structure_intro'),
             'description': 'Heading and introduction shown above the Program Structure cards on the homepage. The cards themselves are managed under "Program Structure".',
         }),
+        ('Homepage About Section', {
+            'fields': (
+                'home_about_badge', 'home_about_heading', 'home_about_text',
+                'home_about_badge_year', 'home_about_badge_label',
+                'home_about_highlight_1_title', 'home_about_highlight_1_text',
+                'home_about_highlight_2_title', 'home_about_highlight_2_text',
+                'home_about_image_1', 'home_about_image_2',
+            ),
+            'description': (
+                'The About block on the homepage: label, heading, paragraph, the gold "Since" '
+                'badge, the two highlight boxes, and the two collage photos. Clearing a field '
+                'hides that piece; a highlight box disappears when both of its fields are blank. '
+                'Placeholder photos are used until your own are uploaded.'
+            ),
+        }),
         ('About Us Page', {
             'fields': (
                 'about_heading', 'about_intro', 'about_content',
