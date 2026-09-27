@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load content_tags %}
 
 {% block title %}Home | {{ site_settings.site_name }}{% endblock %}
 
@@ -24,10 +25,11 @@
                     <i class="ri-sparkling-fill text-lacd-gold"></i> WELCOME TO {{ site_settings.agency_acronym }} {{ site_settings.site_name|upper }}
                 </div>
 
+                {% if site_settings.hero_text %}
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold leading-tight text-white tracking-tight">
-                    Start Your Community's <br class="hidden sm:inline">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-lacd-gold via-amber-300 to-amber-400">Beautiful & Bright</span> Future.
+                    {{ site_settings.hero_text|hero_headline }}
                 </h1>
+                {% endif %}
 
                 <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed mx-auto lg:mx-0">
                     {{ site_settings.site_name }} builds alliances to mitigate global environmental challenges — supporting community-based natural resource management, sustainable forest conservation, and livelihood development in Liberia.

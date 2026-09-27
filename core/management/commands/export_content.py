@@ -87,6 +87,7 @@ SPECS = (
             ('social_links', lambda r: json.dumps(r.social_links, ensure_ascii=False) if r.social_links else ''),
             ('logo', _raw('logo')),
             ('hero_background_image', _raw('hero_background_image')),
+            ('hero_text', _raw('hero_text')),
             ('program_structure_heading', _raw('program_structure_heading')),
             ('program_structure_intro', _raw('program_structure_intro')),
         ),

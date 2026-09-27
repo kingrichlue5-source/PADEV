@@ -221,7 +221,7 @@ Remove vacancies promptly after the deadline or mark them inactive in the admin 
 
 The administration panel contains these manageable sections:
 
-1. **Site Settings:** name, acronym, logo, contact details, address, and social links. This is a single organization-wide record.
+1. **Site Settings:** name, acronym, logo, contact details, address, social links, the homepage hero background image and **Hero Text** headline, and the Program Structure heading and introduction. This is a single organization-wide record.
 2. **Navigation Menus:** menu labels, URLs, ordering, badges, and child menu items.
 3. **Hero Slides:** homepage carousel content, images, the full article behind each Read More button, order, and active state.
 4. **Program Structure:** the homepage cards that float below the hero — title, short copy, full detail article, icon, colour theme, order, and active state. The section heading and introduction are edited in **Site Settings → Program Structure Section** and shown above the cards on the dark hero background. The cards appear only when at least one is active, so the heading disappears with them.
@@ -322,7 +322,7 @@ This section is aligned with the current Django models and should be used as the
 
 Required: `site_name`, `agency_acronym`, `contact_email`, `contact_phone`, and `address`.
 
-Optional: `logo`, `social_links`, `hero_background_image`, and the **Program Structure Section** pair: `program_structure_heading` (default `Program Structure`) and `program_structure_intro` (the introduction shown above the homepage cards; leave blank to hide it). Social links should be supplied as label and URL pairs using labels such as `facebook`, `instagram`, `twitter`, `linkedin`, or `youtube`.
+Optional: `logo`, `social_links`, `hero_background_image`, `hero_text` (the homepage headline — start a new line for a line break and wrap words in `**` to show them in the gold gradient, for example `Start Your Community's` on the first line and `**Beautiful & Bright** Future.` on the second; leave it blank to hide the headline), and the **Program Structure Section** pair: `program_structure_heading` (default `Program Structure`) and `program_structure_intro` (the introduction shown above the homepage cards; leave blank to hide it). Social links should be supplied as label and URL pairs using labels such as `facebook`, `instagram`, `twitter`, `linkedin`, or `youtube`.
 
 ### Homepage hero slides
 
@@ -414,7 +414,7 @@ Visitors create these records; PADEV does not need to prepare them. The form req
 
 Provide final approved copy, or confirm that the current wording may remain, for:
 
-- Homepage hero headline, introductory paragraph, and CTA labels.
+- Homepage introductory paragraph and CTA labels. The hero headline is editable: it is the **Hero Text** field in **Site Settings → Hero Section**.
 - About section heading, organization summary, highlights, and founding-year statement.
 - Homepage impact figures: projects delivered, forest-fringed communities, beehives established, and counties reached. The current view uses the project count plus fixed values of `100`, `190`, and `15`; approve the exact figures and the `+` suffix.
 - Homepage introductions for programmes, projects, procurement, news, and contact.

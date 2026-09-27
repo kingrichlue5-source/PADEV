@@ -42,7 +42,10 @@ class SiteSettingAdmin(ModelAdmin):
     list_display = ('site_name', 'agency_acronym', 'contact_email', 'contact_phone')
     fieldsets = (
         ('Branding', {'fields': ('site_name', 'agency_acronym', 'logo')}),
-        ('Hero Section', {'fields': ('hero_background_image',), 'classes': ('collapse',)}),
+        ('Hero Section', {
+            'fields': ('hero_background_image', 'hero_text'),
+            'description': 'Background image behind the homepage hero, and the "Hero Text" headline. Start a new line for a line break; wrap words in ** to show them in the gold gradient.',
+        }),
         ('Program Structure Section', {
             'fields': ('program_structure_heading', 'program_structure_intro'),
             'description': 'Heading and introduction shown above the Program Structure cards on the homepage. The cards themselves are managed under "Program Structure".',

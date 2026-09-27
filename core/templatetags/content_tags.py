@@ -1,8 +1,17 @@
 """Template tags for rendering CMS-managed article copy."""
+import re
+
 from django import template
 from django.utils.html import escape, mark_safe
 
 register = template.Library()
+
+# Gold gradient used for the accented words in the homepage headline.
+HERO_GRADIENT = (
+    'text-transparent bg-clip-text bg-gradient-to-r '
+    'from-lacd-gold via-amber-300 to-amber-400'
+)
+HERO_ACCENT = re.compile(r'\*\*(.+?)\*\*')
 
 # Lines starting with any of these become bullet list items.
 BULLET_PREFIXES = ('- ', '\u2022 ', '* ', '\u2013 ')
@@ -54,3 +63,32 @@ def rich_text(value):
     flush_paragraph()
     flush_bullets()
     return mark_safe('\n'.join(out))
+
+
+@register.filter
+def hero_headline(value):
+    """Render the CMS 'Hero Text' homepage headline.
+
+    - A new line becomes a line break that is hidden on phones, matching the
+      markup the section used before it was editable.
+    - Words wrapped in ``**`` are shown in the gold gradient.
+    - Everything is HTML-escaped first, so the output is always safe.
+    """
+    if not value:
+        return ''
+
+    lines = []
+    for raw in str(value).splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        safe = escape(line)
+        safe = HERO_ACCENT.sub(
+            lambda match: '<span class="%s">%s</span>' % (HERO_GRADIENT, match.group(1)),
+            safe,
+        )
+        lines.append(safe)
+
+    if not lines:
+        return ''
+    return mark_safe(' <br class="hidden sm:inline">\n'.join(lines))

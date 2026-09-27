@@ -13,6 +13,13 @@ class SiteSetting(models.Model):
     address = models.CharField(max_length=255, default='Sophie Community, Opposite HILA School, Congo Town, Monrovia, Liberia')
     social_links = models.JSONField(default=dict, blank=True)
     hero_background_image = models.ImageField(upload_to='site/', blank=True, null=True, help_text="Optional background image for the hero section on the homepage")
+    hero_text = models.TextField(
+        default="Start Your Community's\n**Beautiful & Bright** Future.",
+        help_text=(
+            "Homepage headline. Start a new line for a line break; wrap words in ** "
+            "to show them in the gold gradient. Leave blank to hide the headline."
+        ),
+    )
     program_structure_heading = models.CharField(
         max_length=120,
         default='Program Structure',
