@@ -8,7 +8,39 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyHeader();
   initCounters();
   initModals();
+  initHeadlineRotator();
 });
+
+/**
+ * Hero Headline Rotator
+ * Cross-fades the headline lines stored in Site Settings -> Hero Text,
+ * one blank line per headline, at a deliberately slow pace.
+ */
+function initHeadlineRotator() {
+  const rotator = document.querySelector('[data-headline-rotator]');
+  if (!rotator) return;
+
+  const items = Array.from(rotator.querySelectorAll('.hero-headline'));
+  if (items.length < 2) return;
+
+  // Respect visitors who ask for reduced motion: the first line simply stays.
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const interval = parseInt(rotator.dataset.interval, 10) || 7000;
+  let index = 0;
+
+  window.setInterval(() => {
+    if (document.hidden) return;
+
+    items[index].classList.add('is-hidden');
+    items[index].setAttribute('aria-hidden', 'true');
+
+    index = (index + 1) % items.length;
+
+    items[index].classList.remove('is-hidden');
+    items[index].removeAttribute('aria-hidden');
+  }, interval);
+}
 
 /**
  * Mobile Drawer Menu Handler

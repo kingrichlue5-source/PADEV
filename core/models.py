@@ -15,10 +15,25 @@ class SiteSetting(models.Model):
     hero_background_image = models.ImageField(upload_to='site/', blank=True, null=True, help_text="Optional background image for the hero section on the homepage")
     hero_text = models.TextField(
         blank=True,
-        default="Start Your Community's\n**Beautiful & Bright** Future.",
+        default=(
+            "Empowering Communities. **Preserving Nature.** Securing Futures.\n\n"
+            "The Future of **Sustainable Forest Management** Belongs to Communities…\n\n"
+            "We partner with local communities to **sustainably manage their natural resources**, "
+            "protecting biodiversity while building resilient local economies.\n\n"
+            "Putting **A Human Face** to Community Forestry…\n\n"
+            "We empower forest dependent communities to protect their forests, build **sustainable "
+            "livelihoods**, and fight climate change from bottom, up.\n\n"
+            "**Meet the Communities** and Support Our Mission\n\n"
+            "Reaching **100+ Rural Communities**, leaving real impacts\n\n"
+            "**Building infrastructure** with the people\n\n"
+            "**Laying foundations** for growth\n\n"
+            "**Building capacity** and leaving lasting legacy"
+        ),
         help_text=(
-            "Homepage headline. Start a new line for a line break; wrap words in ** "
-            "to show them in the gold gradient. Leave blank to hide the headline."
+            "Homepage headlines, shown one after another with a slow fade. Separate headlines "
+            "with a blank line — there is no limit. Start a new line inside a headline for a "
+            "line break, and wrap words in ** to show them in the gold gradient. Leave blank "
+            "to hide the headline."
         ),
     )
     about_heading = models.CharField(

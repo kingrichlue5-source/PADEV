@@ -97,6 +97,34 @@ def line_items(value):
 
 
 @register.filter
+def hero_headlines(value):
+    """Split the CMS 'Hero Text' into the list of headlines shown in turn.
+
+    A blank line separates headlines; each headline follows the usual hero
+    rules — a new line is a responsive line break and ``**words**`` are shown
+    in the gold gradient. Returns a list of safe HTML strings, empty when the
+    field is blank.
+    """
+    if not value:
+        return []
+
+    blocks = []
+    current = []
+    for raw in str(value).splitlines():
+        line = raw.strip()
+        if not line:
+            if current:
+                blocks.append('\n'.join(current))
+                current = []
+            continue
+        current.append(line)
+    if current:
+        blocks.append('\n'.join(current))
+
+    return [hero_headline(block) for block in blocks]
+
+
+@register.filter
 def hero_headline(value):
     """Render the CMS 'Hero Text' homepage headline.
 
