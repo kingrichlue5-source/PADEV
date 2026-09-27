@@ -11,10 +11,17 @@ HERO_GRADIENT = (
     'text-transparent bg-clip-text bg-gradient-to-r '
     'from-lacd-gold via-amber-300 to-amber-400'
 )
-HERO_ACCENT = re.compile(r'\*\*(.+?)\*\*')
+# ``**words**`` is emphasised: gold gradient in the hero headline, bold in articles.
+BOLD = re.compile(r'\*\*(.+?)\*\*')
+HERO_ACCENT = BOLD
 
 # Lines starting with any of these become bullet list items.
 BULLET_PREFIXES = ('- ', '\u2022 ', '* ', '\u2013 ')
+
+
+def _inline(text):
+    """Escape HTML, then turn ``**bold**`` markers into <strong> tags."""
+    return BOLD.sub(lambda match: '<strong>%s</strong>' % match.group(1), escape(text))
 
 
 @register.filter
@@ -24,7 +31,8 @@ def rich_text(value):
     - A blank line starts a new paragraph.
     - Consecutive plain lines are joined, so editors can wrap text freely.
     - Lines starting with "-", "*", an en dash or a bullet become <li> items.
-    - Everything is HTML-escaped, so the output is always safe.
+    - Words wrapped in ``**`` become bold, so section headings stand out.
+    - Everything is HTML-escaped first, so the output is always safe.
     """
     if not value:
         return ''
@@ -35,12 +43,12 @@ def rich_text(value):
 
     def flush_paragraph():
         if paragraph:
-            out.append('<p>%s</p>' % escape(' '.join(paragraph)))
+            out.append('<p>%s</p>' % _inline(' '.join(paragraph)))
             paragraph.clear()
 
     def flush_bullets():
         if bullets:
-            items = ''.join('<li>%s</li>' % escape(item) for item in bullets)
+            items = ''.join('<li>%s</li>' % _inline(item) for item in bullets)
             out.append('<ul>%s</ul>' % items)
             bullets.clear()
 

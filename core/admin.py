@@ -190,7 +190,8 @@ class ProgramAdmin(ModelAdmin):
 class ProjectAdmin(ModelAdmin):
     list_display = ('title', 'county', 'display_status', 'display_progress', 'budget', 'is_featured')
     list_filter = ('status', 'county', 'is_featured', 'program')
-    search_fields = ('title', 'short_description', 'contractor', 'location_details')
+    search_fields = ('title', 'short_description', 'contractor', 'location_details',
+                     'donor', 'implementing_agency', 'partners')
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ('is_featured',)
     list_filter_submit = True

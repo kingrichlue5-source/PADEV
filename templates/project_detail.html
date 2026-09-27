@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load hitcount_tags %}
+{% load content_tags %}
 
 {% block title %}{{ project.title }} | {{ site_settings.agency_acronym }} Project Tracker{% endblock %}
 {% block meta_desc %}{{ project.meta_description|default:project.short_description }}{% endblock %}
@@ -14,9 +15,18 @@
         </div>
         <h1 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">{{ project.title }}</h1>
         <div class="flex flex-wrap items-center gap-6 text-xs text-slate-300">
-            <span><i class="ri-building-line text-lacd-gold"></i> Implementing Partner: {{ project.contractor }}</span>
+            {% if project.implementing_agency or project.contractor %}
+            <span><i class="ri-building-line text-lacd-gold"></i> Implementing Agency: {{ project.implementing_agency|default:project.contractor }}</span>
+            {% endif %}
+            {% if project.donor %}
+            <span><i class="ri-hand-coin-line text-lacd-gold"></i> Donor: {{ project.donor }}</span>
+            {% endif %}
+            {% if project.budget %}
             <span><i class="ri-bank-card-line text-lacd-gold"></i> Budget: {{ project.budget }}</span>
+            {% endif %}
+            {% if project.location_details %}
             <span><i class="ri-map-pin-line text-lacd-gold"></i> Location: {{ project.location_details }}</span>
+            {% endif %}
             <span><i class="ri-eye-line text-lacd-gold"></i> {% get_hit_count for project %} views</span>
         </div>
     </div>
@@ -36,9 +46,38 @@
             </div>
         </div>
 
+        <!-- Project factsheet -->
+        {% if project.start_date or project.completion_date or project.partners or project.report_link %}
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm">
+            {% if project.start_date or project.completion_date %}
+            <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Project Dates</p>
+                <p class="text-lacd-navy font-semibold">
+                    {{ project.start_date|date:"j M Y"|default:"Not set" }} &ndash; {{ project.completion_date|date:"j M Y"|default:"Ongoing" }}
+                </p>
+            </div>
+            {% endif %}
+            {% if project.partners %}
+            <div class="{% if not project.start_date and not project.completion_date %}sm:col-span-2{% endif %}">
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Partner(s)</p>
+                <div class="article-body text-slate-700">{{ project.partners|rich_text }}</div>
+            </div>
+            {% endif %}
+            {% if project.report_link %}
+            <div class="sm:col-span-2">
+                <a href="{{ project.report_link }}" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 bg-lacd-gold hover:bg-lacd-gold-hover text-lacd-navy font-heading font-extrabold text-sm px-6 py-3 rounded-full transition-all">
+                    <span>View Project Report</span>
+                    <i class="ri-arrow-right-line"></i>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
         <div class="prose max-w-none text-slate-700 space-y-4 leading-relaxed">
             <h3 class="text-xl font-heading font-bold text-lacd-navy">Project Description & Scope</h3>
-            <p>{{ project.description }}</p>
+            <div class="article-body">{{ project.description|rich_text }}</div>
         </div>
     </div>
 </section>

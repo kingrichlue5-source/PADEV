@@ -105,6 +105,10 @@ For every project, provide:
 - County and specific location or communities.
 - Percentage complete, from 0 to 100.
 - Approved budget, if publishable.
+- Donor or funder.
+- Implementing agency or lead sector.
+- Partner organizations (one per line).
+- Link to the project report or factsheet, if it is public.
 - Contractor, implementing partner, client, or funder.
 - Start date and completion date.
 - Whether the project should be featured.
@@ -226,7 +230,7 @@ The administration panel contains these manageable sections:
 3. **Hero Slides:** homepage carousel content, images, the full article behind each Read More button, order, and active state.
 4. **Program Structure:** the homepage cards that float below the hero — title, short copy, full detail article, icon, colour theme, order, and active state. The section heading and introduction are edited in **Site Settings → Program Structure Section** and shown above the cards on the dark hero background. The cards appear only when at least one is active, so the heading disappears with them.
 5. **Development Programmes:** programme descriptions, locations, dates, budgets, beneficiaries, and featured state.
-6. **County Projects:** project details, status, progress, dates, partners, and featured state.
+6. **County Projects:** project details, status, progress, donor, implementing agency, partners, report link, dates, and featured state.
 7. **News and Updates:** articles, categories, authors, dates, images, and featured state.
 8. **Success Stories:** beneficiary stories, quotes, locations, images, and featured state.
 9. **Team Members:** people, roles, biographies, photos, order, and active state.
@@ -334,7 +338,7 @@ Optional: badge text, description, slide image, `slug`, and `detail_content` (th
 
 Required: `title`, `description` (maximum 300 characters), and `is_active`.
 
-Optional: `detail_content` (the full article opened when the title is clicked; new paragraphs start on a new line and lines starting with `-` become bullet points), `icon_class` (Remix icon such as `ri-tree-line`), `theme` (one of `green`, `gold`, `navy`, `rose`), `slug`, and `order`. Cards are numbered `01`, `02`, … automatically by display order. The grid uses three columns for three to six active cards, four columns above that, and hides itself when no card is active. The card title is a link; when `detail_content` is empty the page repeats the short description instead.
+Optional: `detail_content` (the full article opened when the title is clicked; new paragraphs start on a new line, lines starting with `-` become bullet points, and words wrapped in `**` are shown in bold), `icon_class` (Remix icon such as `ri-tree-line`), `theme` (one of `green`, `gold`, `navy`, `rose`), `slug`, and `order`. Cards are numbered `01`, `02`, … automatically by display order. The grid uses three columns for three to six active cards, four columns above that, and hides itself when no card is active. The card title is a link; when `detail_content` is empty the page repeats the short description instead.
 
 The live site loads five cards — Forest Governance, Livelihood & Enterprise Development, Strategic Communications, Stakeholder Engagement, and Training and Facilitation — with the approved long-form text already in place. `python manage.py load_program_structure` seeds those five into an empty database and retires the older fallback cards; it never overwrites text an editor has saved (unless `--force` is passed), so it is safe to run at any time.
 
@@ -352,7 +356,11 @@ Allowed statuses: `Active`, `Upcoming`, `Completed`. Allowed counties are listed
 
 Required: title, short description (maximum 500 characters), full description, status, county, progress percentage, and featured decision.
 
-Optional: related programme, cover image, location details, budget, contractor, start date, completion date, and SEO meta description (maximum 160 characters). Progress must be a whole number from `0` to `100`.
+Optional: related programme, cover image, location details, budget, contractor, `donor`, `implementing_agency`, `partners` (one per line), `report_link`, start date, completion date, and SEO meta description (maximum 160 characters). Progress must be a whole number from `0` to `100`.
+
+On the detail page the description is rendered as paragraphs (blank line = new paragraph), bullets (a line starting with `-`) and bold section headings (wrapped in `**`), and the donor, agency, dates, partners and report link are shown in the factsheet above it. Empty rows such as a missing budget are hidden automatically.
+
+The live site carries five project factsheets — Guinea Forest Integrated Programs (GFIP), Community-Based Forestry and Protected Area Management (CBFM), the LiFE-P national and regional consultations, USAID Conservation Works, and the Sapo Forest Landscape grant. `python manage.py load_projects` seeds those five into an empty database; it never overwrites a project an editor has saved (unless `--force`), so it is safe to run at any time.
 
 Allowed statuses: `Planning`, `Ongoing / In Progress`, `Completed`, `On Hold`.
 
@@ -431,7 +439,7 @@ Use one row per record and keep these field names unchanged. Put long descriptio
 Program: title | icon_class | short_description | description | status | county | budget | target_beneficiaries | start_date | end_date | is_featured | meta_description | cover_image
 ProgramStructure: title | description | detail_content | icon_class | theme | order | is_active
 HeroSlide: badge_text | title | description | detail_content | slide_image | order | is_active
-Project: title | program_title | short_description | description | status | county | location_details | progress_percentage | budget | contractor | start_date | completion_date | is_featured | meta_description | cover_image
+Project: title | program_title | short_description | description | status | county | location_details | progress_percentage | budget | contractor | donor | implementing_agency | partners | report_link | start_date | completion_date | is_featured | meta_description | cover_image
 News: title | author | category | excerpt | content_file | approved_publication_date | is_featured | meta_description | featured_image
 Story: title | beneficiary_name | county | quote | content_file | consent_reference | is_featured | meta_description | featured_image
 Team: full_name | position | role_category | bio | photo | email | order | is_active
