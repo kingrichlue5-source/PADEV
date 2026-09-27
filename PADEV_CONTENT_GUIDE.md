@@ -414,7 +414,7 @@ Optional: reference number and SEO meta description (maximum 160 characters). Al
 
 ### Navigation menu items
 
-Required: visible title, destination URL, display order, and active decision. Optional: parent menu item and badge text. Suggested launch links are Home `/`, About Us `/about/`, Our Team `/team/`, Programmes `/programmes/`, Projects `/projects/`, Publications `/publications/`, Procurement `/procurement/`, Careers `/careers/`, and Contact Us `/contact/`.
+Required: visible title, destination URL, display order, and active decision. Optional: parent menu item and badge text. Suggested launch links are Home `/`, About Us `/about/`, Our Team `/team/`, Programmes `/programmes/`, Projects `/projects/`, Publications `/publications/`, Procurement `/procurement/`, Careers `/careers/`, and Contact Us `/contact/`. A brand-new database is given that standard menu automatically on its first deploy (seven items, without Procurement and Careers); as soon as any menu row exists, the menu is entirely in the editor's hands.
 
 ### Contact submissions
 
