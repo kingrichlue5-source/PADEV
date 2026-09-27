@@ -30,11 +30,16 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # Add the new columns (slug is nullable until every row is backfilled)
+        # Add the new columns (slug is nullable until every row is backfilled).
+        # db_index=False on purpose: SlugField defaults to db_index=True, and the
+        # column must be added unindexed, otherwise the AlterField below re-creates
+        # the same PostgreSQL varchar_pattern_ops ("_like") index and fails with
+        # 'relation ... already exists'. The final AlterField installs the real
+        # unique constraint and its pattern index exactly once.
         migrations.AddField(
             model_name='heroslide',
             name='slug',
-            field=models.SlugField(blank=True, max_length=255, null=True),
+            field=models.SlugField(blank=True, db_index=False, max_length=255, null=True),
         ),
         migrations.AddField(
             model_name='heroslide',
@@ -48,7 +53,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='programstructure',
             name='slug',
-            field=models.SlugField(blank=True, max_length=200, null=True),
+            field=models.SlugField(blank=True, db_index=False, max_length=200, null=True),
         ),
         migrations.AddField(
             model_name='programstructure',
