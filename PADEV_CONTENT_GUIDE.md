@@ -344,6 +344,8 @@ Required: title, short description (maximum 500 characters), full description, s
 
 Optional: icon class, cover image, budget, target beneficiaries, start date, end date, and SEO meta description (maximum 160 characters).
 
+Card behaviour: the homepage and Programmes page show the title plus the first 15–20 words of the short description (the full text appears on the detail page), and the budget and target rows are hidden automatically whenever they are empty or literally `None`.
+
 Allowed statuses: `Active`, `Upcoming`, `Completed`. Allowed counties are listed in Section 15.
 
 ### Projects
@@ -439,6 +441,36 @@ Procurement: title | reference_number | category | description | tender_document
 Career: job_title | reference_number | department | location | job_type | description | requirements | application_deadline | contact_email | is_active | meta_description
 Navigation: title | url | parent_title | order | badge_text | is_active
 ```
+
+### Downloading the content already in the database
+
+The spreadsheets above are for content you prepare. To read back what the website is
+currently publishing, export the live database to CSV:
+
+```text
+python manage.py export_content
+```
+
+This writes one file per content type into `content_export/`, plus a `README.txt`
+summarising the rules below. To export from the deployed website, run the same command
+through the Railway CLI on your own computer so the files are saved locally:
+
+```text
+railway run python manage.py export_content
+```
+
+Options: `--output-dir PATH` writes to a different folder, and `--only programme news`
+limits the export to selected content types.
+
+Reading the export:
+
+- The first column is always `id`, and the second is `slug` where one exists. Both are system values — keep them, but never rename or delete them. Every other column keeps the field name shown in the templates above.
+- Choice columns (status, county, category, theme, role category, job type) hold the human labels from sections 10 and 15, for example `Nationwide / Multiple Counties` or `Press Release`.
+- Dates use `YYYY-MM-DD`; procurement closing times use `2026-10-31 17:00 (GMT+00:00)` in local Monrovia time; yes/no columns use `TRUE` / `FALSE`.
+- Image and PDF columns contain the stored file path such as `programs/forest-governance.jpg`. The files themselves are not in the export.
+- Full article text sits inside the CSV under the `content_file` column, so a cell may hold several paragraphs — keep the line breaks.
+- `Story.csv` → `consent_reference` and `Partner.csv` → `public_display_approved` are empty because the website has no field for them yet; record those answers in the spreadsheet for your own files.
+- `Publication.csv` omits `download_count` (system-managed), and contact submissions are never exported.
 
 ## 13. Media and file standards
 
