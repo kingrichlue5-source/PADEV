@@ -14,6 +14,7 @@ class SiteSetting(models.Model):
     social_links = models.JSONField(default=dict, blank=True)
     hero_background_image = models.ImageField(upload_to='site/', blank=True, null=True, help_text="Optional background image for the hero section on the homepage")
     hero_text = models.TextField(
+        blank=True,
         default="Start Your Community's\n**Beautiful & Bright** Future.",
         help_text=(
             "Homepage headline. Start a new line for a line break; wrap words in ** "
@@ -22,18 +23,21 @@ class SiteSetting(models.Model):
     )
     about_heading = models.CharField(
         max_length=150,
+        blank=True,
         default='About PADEV',
-        help_text="Title shown at the top of the About Us page",
+        help_text="Title shown at the top of the About Us page. Leave blank to hide it.",
     )
     about_intro = models.CharField(
         max_length=300,
+        blank=True,
         default=(
             "A registered, accredited and recognized Liberian organization contributing to "
             "national development through community-based natural resource management."
         ),
-        help_text="One-line summary under the About Us page title",
+        help_text="One-line summary under the About Us page title. Leave blank to hide it.",
     )
     about_content = models.TextField(
+        blank=True,
         default=(
             "PADEV is a registered fiduciary, accredited and recognized Liberian organization "
             "founded almost a decade ago to contribute to national development. Our work broadly "
@@ -70,7 +74,48 @@ class SiteSetting(models.Model):
         ),
         help_text=(
             "Body of the About Us page. Blank line = new paragraph, a line starting with - is a "
-            "bullet, and words wrapped in ** are bold."
+            "bullet, and words wrapped in ** are bold. Leave blank to hide the block."
+        ),
+    )
+    about_mission = models.TextField(
+        blank=True,
+        default=(
+            "Empowering communities and building strong alliances to:\n"
+            "- Address environmental challenges;\n"
+            "- Sustainably manage natural resources;\n"
+            "- Drive systemic change; and\n"
+            "- Protect our shared future."
+        ),
+        help_text=(
+            "Mission, shown on the About Us page. Blank line = new paragraph, a line starting "
+            "with - is a bullet, and words wrapped in ** are bold. Leave blank to hide the card."
+        ),
+    )
+    about_vision = models.TextField(
+        blank=True,
+        default=(
+            "PADEV aspires to:\n"
+            "- Be the leader of community-led natural resource management;\n"
+            "- Drive sustainable national development; and\n"
+            "- Contribute to global environmental goals."
+        ),
+        help_text=(
+            "Vision, shown on the About Us page. Blank line = new paragraph, a line starting "
+            "with - is a bullet, and words wrapped in ** are bold. Leave blank to hide the card."
+        ),
+    )
+    about_values = models.TextField(
+        blank=True,
+        default=(
+            "Environmental Stewardship\n"
+            "Transparency\n"
+            "Mutual Accountability\n"
+            "Inclusiveness and participation\n"
+            "Shared tolerance and diversity"
+        ),
+        help_text=(
+            "Core values shown as chips on the About Us page — one value per line (a leading - "
+            "is allowed and ignored). Leave blank to hide the card."
         ),
     )
     program_structure_heading = models.CharField(

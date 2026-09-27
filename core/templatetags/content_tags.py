@@ -74,6 +74,29 @@ def rich_text(value):
 
 
 @register.filter
+def line_items(value):
+    """Split CMS text into a list of items — one per non-blank line.
+
+    Bullet prefixes ("- ", "* ", the bullet and en dash characters) are
+    accepted and stripped, so the same convention works whether an editor
+    writes a plain list or a bulleted one. Used for chip-style lists such as
+    the core values. Everything is HTML-escaped first.
+    """
+    if not value:
+        return []
+
+    items = []
+    for raw in str(value).splitlines():
+        line = raw.strip()
+        prefix = next((p for p in BULLET_PREFIXES if line.startswith(p)), None)
+        if prefix:
+            line = line[len(prefix):].strip()
+        if line:
+            items.append(escape(line))
+    return items
+
+
+@register.filter
 def hero_headline(value):
     """Render the CMS 'Hero Text' homepage headline.
 

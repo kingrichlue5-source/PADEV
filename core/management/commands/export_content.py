@@ -93,6 +93,9 @@ SPECS = (
             ('about_heading', _raw('about_heading')),
             ('about_intro', _raw('about_intro')),
             ('about_content', _raw('about_content')),
+            ('about_mission', _raw('about_mission')),
+            ('about_vision', _raw('about_vision')),
+            ('about_values', _raw('about_values')),
         ),
     },
     {
