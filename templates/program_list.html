@@ -39,10 +39,12 @@
                     <h3 class="font-heading font-bold text-xl text-lacd-navy group-hover:text-lacd-green transition-colors">
                         <a href="{% url 'core:program_detail' prog.slug %}">{{ prog.title }}</a>
                     </h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">{{ prog.short_description }}</p>
+                    <p class="text-xs text-slate-500 leading-relaxed">{{ prog.short_description|truncatewords:18 }}</p>
                     <div class="pt-3 border-t text-xs font-semibold text-slate-600 flex justify-between">
+                        {% if prog.budget and prog.budget != "None" %}
                         <span>Budget: {{ prog.budget }}</span>
-                        <span>Scope: {{ prog.get_county_display }}</span>
+                        {% endif %}
+                        <span class="ml-auto">Scope: {{ prog.get_county_display }}</span>
                     </div>
                 </div>
             </div>

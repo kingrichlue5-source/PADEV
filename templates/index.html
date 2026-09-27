@@ -322,20 +322,24 @@
                     <div class="space-y-2">
                         <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
                             <span><i class="ri-map-pin-line text-lacd-gold"></i> {{ prog.get_county_display }}</span>
+                            {% if prog.budget and prog.budget != "None" %}
                             <span><i class="ri-bank-card-line text-lacd-gold"></i> {{ prog.budget }}</span>
+                            {% endif %}
                         </div>
                         <h3 class="font-heading font-bold text-xl text-lacd-navy group-hover:text-lacd-green transition-colors">
                             <a href="{% url 'core:program_detail' prog.slug %}">{{ prog.title }}</a>
                         </h3>
                         <p class="text-xs text-slate-500 leading-relaxed">
-                            {{ prog.short_description }}
+                            {{ prog.short_description|truncatewords:18 }}
                         </p>
                     </div>
 
                     <!-- Footer -->
                     <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-lacd-navy">
+                        {% if prog.target_beneficiaries and prog.target_beneficiaries != "None" %}
                         <span class="text-slate-400 font-normal">Target: {{ prog.target_beneficiaries }}</span>
-                        <a href="{% url 'core:program_detail' prog.slug %}" class="inline-flex items-center gap-1 text-lacd-green hover:text-lacd-gold transition-colors">
+                        {% endif %}
+                        <a href="{% url 'core:program_detail' prog.slug %}" class="inline-flex items-center gap-1 ml-auto text-lacd-green hover:text-lacd-gold transition-colors">
                             <span>View Details</span>
                             <i class="ri-arrow-right-s-line"></i>
                         </a>
