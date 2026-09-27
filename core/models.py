@@ -13,6 +13,16 @@ class SiteSetting(models.Model):
     address = models.CharField(max_length=255, default='Sophie Community, Opposite HILA School, Congo Town, Monrovia, Liberia')
     social_links = models.JSONField(default=dict, blank=True)
     hero_background_image = models.ImageField(upload_to='site/', blank=True, null=True, help_text="Optional background image for the hero section on the homepage")
+    program_structure_heading = models.CharField(
+        max_length=120,
+        default='Program Structure',
+        help_text="Heading shown above the Program Structure cards on the homepage",
+    )
+    program_structure_intro = models.TextField(
+        blank=True,
+        default='Driven by specialized expertise, Partners in Development delivers impactful solutions across four core areas: Forest Governance, Livelihood & Enterprise Development, Strategic Communication, and Stakeholder Engagement.',
+        help_text="Introduction shown under the heading on the homepage. Leave blank to hide it.",
+    )
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

@@ -37,7 +37,8 @@ def _structure_grid_cols(count):
         return 'lg:grid-cols-1'
     if count == 2:
         return 'sm:grid-cols-2 lg:grid-cols-2'
-    if count == 3:
+    if count in (3, 5, 6):
+        # 3 columns: 5 cards wrap as 3 + 2 instead of leaving a lonely 5th card
         return 'sm:grid-cols-2 lg:grid-cols-3'
     return 'sm:grid-cols-2 lg:grid-cols-4'
 

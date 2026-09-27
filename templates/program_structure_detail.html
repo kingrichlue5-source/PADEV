@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load content_tags %}
 
 {% block title %}{{ card.title }} | {{ site_settings.agency_acronym }}{% endblock %}
 {% block meta_desc %}{{ card.description|truncatewords:30 }}{% endblock %}
@@ -20,9 +21,9 @@
 
 <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-4 space-y-8">
-        <div class="prose max-w-none text-slate-700 leading-relaxed">
+        <div class="prose article-body max-w-none text-slate-700 leading-relaxed">
             {% if card.detail_content %}
-                {{ card.detail_content|linebreaks }}
+                {{ card.detail_content|rich_text }}
             {% else %}
                 <p>{{ card.description }}</p>
                 <p class="text-slate-500 text-sm">More details on this focus area are being prepared. Please check back soon.</p>

@@ -224,7 +224,7 @@ The administration panel contains these manageable sections:
 1. **Site Settings:** name, acronym, logo, contact details, address, and social links. This is a single organization-wide record.
 2. **Navigation Menus:** menu labels, URLs, ordering, badges, and child menu items.
 3. **Hero Slides:** homepage carousel content, images, the full article behind each Read More button, order, and active state.
-4. **Program Structure:** the homepage cards that float below the hero — title, short copy, full detail article, icon, colour theme, order, and active state. The section heading ("Program Structure") and its introduction are fixed text in the page template, shown above the cards on the dark hero background; the cards appear only when at least one is active.
+4. **Program Structure:** the homepage cards that float below the hero — title, short copy, full detail article, icon, colour theme, order, and active state. The section heading and introduction are edited in **Site Settings → Program Structure Section** and shown above the cards on the dark hero background. The cards appear only when at least one is active, so the heading disappears with them.
 5. **Development Programmes:** programme descriptions, locations, dates, budgets, beneficiaries, and featured state.
 6. **County Projects:** project details, status, progress, dates, partners, and featured state.
 7. **News and Updates:** articles, categories, authors, dates, images, and featured state.
@@ -322,7 +322,7 @@ This section is aligned with the current Django models and should be used as the
 
 Required: `site_name`, `agency_acronym`, `contact_email`, `contact_phone`, and `address`.
 
-Optional: `logo`, `social_links`, and `hero_background_image`. Social links should be supplied as label and URL pairs using labels such as `facebook`, `instagram`, `twitter`, `linkedin`, or `youtube`.
+Optional: `logo`, `social_links`, `hero_background_image`, and the **Program Structure Section** pair: `program_structure_heading` (default `Program Structure`) and `program_structure_intro` (the introduction shown above the homepage cards; leave blank to hide it). Social links should be supplied as label and URL pairs using labels such as `facebook`, `instagram`, `twitter`, `linkedin`, or `youtube`.
 
 ### Homepage hero slides
 
@@ -334,7 +334,9 @@ Optional: badge text, description, slide image, `slug`, and `detail_content` (th
 
 Required: `title`, `description` (maximum 300 characters), and `is_active`.
 
-Optional: `detail_content` (the full article opened when the title is clicked; new paragraphs start on a new line), `icon_class` (Remix icon such as `ri-tree-line`), `theme` (one of `green`, `gold`, `navy`, `rose`), `slug`, and `order`. Cards are numbered `01`, `02`, … automatically by display order. The grid shows up to four cards per row and hides itself when no card is active. The card title is a link; when `detail_content` is empty the page repeats the short description instead.
+Optional: `detail_content` (the full article opened when the title is clicked; new paragraphs start on a new line and lines starting with `-` become bullet points), `icon_class` (Remix icon such as `ri-tree-line`), `theme` (one of `green`, `gold`, `navy`, `rose`), `slug`, and `order`. Cards are numbered `01`, `02`, … automatically by display order. The grid uses three columns for three to six active cards, four columns above that, and hides itself when no card is active. The card title is a link; when `detail_content` is empty the page repeats the short description instead.
+
+The live site loads five cards — Forest Governance, Livelihood & Enterprise Development, Strategic Communications, Stakeholder Engagement, and Training and Facilitation — with the approved long-form text already in place. `python manage.py load_program_structure` seeds those five into an empty database and retires the older fallback cards; it never overwrites text an editor has saved (unless `--force` is passed), so it is safe to run at any time.
 
 ### Programmes
 

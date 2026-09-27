@@ -43,6 +43,10 @@ class SiteSettingAdmin(ModelAdmin):
     fieldsets = (
         ('Branding', {'fields': ('site_name', 'agency_acronym', 'logo')}),
         ('Hero Section', {'fields': ('hero_background_image',), 'classes': ('collapse',)}),
+        ('Program Structure Section', {
+            'fields': ('program_structure_heading', 'program_structure_intro'),
+            'description': 'Heading and introduction shown above the Program Structure cards on the homepage. The cards themselves are managed under "Program Structure".',
+        }),
         ('Contact & Social', {'fields': ('contact_email', 'contact_phone', 'address', 'social_links')}),
     )
     compressed_fields = True

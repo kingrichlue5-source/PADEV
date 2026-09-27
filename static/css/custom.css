@@ -83,3 +83,23 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .organic-border {
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
 }
+
+/* Long-form article body on detail pages (paragraphs + bullet lists) */
+.article-body p {
+  margin-bottom: 1rem;
+}
+.article-body p:last-child {
+  margin-bottom: 0;
+}
+.article-body ul {
+  list-style: disc;
+  margin: 0 0 1.25rem;
+  padding-left: 1.4rem;
+}
+.article-body ul li {
+  margin-bottom: 0.55rem;
+  padding-left: 0.25rem;
+}
+.article-body ul li::marker {
+  color: var(--accent-color);
+}

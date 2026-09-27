@@ -98,17 +98,23 @@
 
         {% if program_structure %}
         <!-- PROGRAM STRUCTURE HEADER — sits on the dark hero, directly above the floating cards -->
+        {% if site_settings.program_structure_heading or site_settings.program_structure_intro %}
         <div class="pt-14 text-center max-w-3xl mx-auto space-y-3 relative z-10">
+            {% if site_settings.program_structure_heading %}
             <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-lacd-gold text-xs font-bold uppercase tracking-wider border border-lacd-gold/30">
-                <i class="ri-stack-line"></i> PROGRAM STRUCTURE
+                <i class="ri-stack-line"></i> {{ site_settings.program_structure_heading|upper }}
             </span>
             <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">
-                Program Structure
+                {{ site_settings.program_structure_heading }}
             </h2>
+            {% endif %}
+            {% if site_settings.program_structure_intro %}
             <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                Driven by specialized expertise, Partners in Development delivers impactful solutions across four core areas: Forest Governance, Livelihood &amp; Enterprise Development, Strategic Communication, and Stakeholder Engagement.
+                {{ site_settings.program_structure_intro }}
             </p>
+            {% endif %}
         </div>
+        {% endif %}
         {% endif %}
     </div>
 </section>
