@@ -56,7 +56,9 @@ class HomeView(TemplateView):
         context['program_structure'] = structure_cards
         context['program_structure_cols'] = _structure_grid_cols(len(structure_cards))
 
-        context['programs'] = Program.objects.filter(is_featured=True)[:4]
+        # "Our Core Programmes" grid — every published programme (up to 6),
+        # with featured ones listed first if more than six exist
+        context['programs'] = Program.objects.order_by('-is_featured', '-created_at')[:6]
         context['projects'] = Project.objects.filter(is_featured=True)[:3]
         context['news_list'] = NewsUpdate.objects.all()[:3]
         context['success_stories'] = SuccessStory.objects.filter(is_featured=True)[:3]

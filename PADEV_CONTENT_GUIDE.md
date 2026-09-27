@@ -10,7 +10,7 @@
 
 The prototype is a public-facing PADEV information portal with these main areas:
 
-- Home: organization overview, hero messages, impact figures, featured programmes, featured projects, partner logos, stories, and latest updates.
+- Home: organization overview, hero messages, the Program Structure section and its cards, impact figures, all published programmes, featured projects, partner logos, stories, and latest updates.
 - About PADEV: mission, background, strategic focus, and organizational information.
 - Our Team: founders, board members, and management team profiles.
 - Programmes: strategic areas of work, with individual programme detail pages.
@@ -80,7 +80,7 @@ Create one content sheet for each programme. The admin form expects:
 | Target beneficiaries | Specific people, communities, groups, or institutions |
 | Start and end dates | Confirmed programme dates |
 | Cover image | Clear programme photograph |
-| Featured | Whether it should appear on the homepage |
+| Featured | Priority only — featured programmes are listed first if more than six programmes exist; every programme is shown |
 
 Suggested programme content structure:
 
@@ -224,7 +224,7 @@ The administration panel contains these manageable sections:
 1. **Site Settings:** name, acronym, logo, contact details, address, and social links. This is a single organization-wide record.
 2. **Navigation Menus:** menu labels, URLs, ordering, badges, and child menu items.
 3. **Hero Slides:** homepage carousel content, images, the full article behind each Read More button, order, and active state.
-4. **Program Structure:** the four floating homepage cards below the hero — heading, short copy, icon, colour theme, order, and active state.
+4. **Program Structure:** the homepage cards that float below the hero — title, short copy, full detail article, icon, colour theme, order, and active state. The section heading ("Program Structure") and its introduction are fixed text in the page template, shown above the cards on the dark hero background; the cards appear only when at least one is active.
 5. **Development Programmes:** programme descriptions, locations, dates, budgets, beneficiaries, and featured state.
 6. **County Projects:** project details, status, progress, dates, partners, and featured state.
 7. **News and Updates:** articles, categories, authors, dates, images, and featured state.

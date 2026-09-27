@@ -6,7 +6,7 @@
 {% block content %}
 
 <!-- HERO SECTION (EDUKA CONCEPT INSPIRED) -->
-<section class="relative {% if site_settings.hero_background_image %}bg-cover bg-center bg-no-repeat{% else %}bg-gradient-to-b from-slate-900 via-lacd-navy to-lacd-green-dark{% endif %} text-white pt-12 pb-32 overflow-hidden bg-grid-pattern"
+<section class="relative {% if site_settings.hero_background_image %}bg-cover bg-center bg-no-repeat{% else %}bg-gradient-to-b from-slate-900 via-lacd-navy to-lacd-green-dark{% endif %} text-white pt-12 {% if program_structure %}pb-44{% else %}pb-32{% endif %} overflow-hidden bg-grid-pattern"
          {% if site_settings.hero_background_image %}style="background-image: url('{{ site_settings.hero_background_image.url }}');"{% endif %}>
     <!-- Geometric Background Lights -->
     <div class="absolute -top-24 -left-24 w-96 h-96 bg-lacd-gold/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -95,6 +95,21 @@
             </div>
 
         </div>
+
+        {% if program_structure %}
+        <!-- PROGRAM STRUCTURE HEADER — sits on the dark hero, directly above the floating cards -->
+        <div class="pt-14 text-center max-w-3xl mx-auto space-y-3 relative z-10">
+            <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-lacd-gold text-xs font-bold uppercase tracking-wider border border-lacd-gold/30">
+                <i class="ri-stack-line"></i> PROGRAM STRUCTURE
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white">
+                Program Structure
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                Driven by specialized expertise, Partners in Development delivers impactful solutions across four core areas: Forest Governance, Livelihood &amp; Enterprise Development, Strategic Communication, and Stakeholder Engagement.
+            </p>
+        </div>
+        {% endif %}
     </div>
 </section>
 
