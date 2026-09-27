@@ -3,13 +3,13 @@ from datetime import date
 from core.models import (
     Program, Project, NewsUpdate, SuccessStory, TeamMember, Client,
     Publication, ProcurementOpportunity, Career,
-    SiteSetting, NavigationMenu, HeroSlide,
+    SiteSetting, NavigationMenu, HeroSlide, ProgramStructure,
 )
 
 CONTENT_MODELS = [
     Program, Project, NewsUpdate, SuccessStory, TeamMember, Client,
     Publication, ProcurementOpportunity, Career,
-    NavigationMenu, HeroSlide,
+    NavigationMenu, HeroSlide, ProgramStructure,
 ]
 
 
@@ -94,6 +94,43 @@ class Command(BaseCommand):
                 'is_active': True,
             },
         )
+
+        # ─── Program Structure (homepage floating cards) ───
+        structure_defs = [
+            {
+                'title': 'Community Forest Governance',
+                'description': 'Establishing and strengthening community forest governance entities with FDA and local leaders.',
+                'icon_class': 'ri-tree-line',
+                'theme': 'green',
+                'order': 1,
+            },
+            {
+                'title': 'Conservation Education',
+                'description': 'Inspiring pupils through environmental clubs and community theater troupes.',
+                'icon_class': 'ri-megaphone-line',
+                'theme': 'gold',
+                'order': 2,
+            },
+            {
+                'title': 'Livelihood & Enterprise',
+                'description': 'Conservation agriculture and beekeeping that raise incomes for forest-fringed communities.',
+                'icon_class': 'ri-seedling-line',
+                'theme': 'navy',
+                'order': 3,
+            },
+            {
+                'title': 'Gender & Social Inclusion',
+                'description': 'Inclusion of women, boys, girls, and marginalized people in all project activities.',
+                'icon_class': 'ri-women-line',
+                'theme': 'rose',
+                'order': 4,
+            },
+        ]
+        for card in structure_defs:
+            ProgramStructure.objects.get_or_create(
+                title=card['title'],
+                defaults={**card, 'is_active': True},
+            )
 
         # ─── Programs ───
         prog_cbnrm, _ = Program.objects.get_or_create(

@@ -82,6 +82,45 @@ class HeroSlide(models.Model):
         return self.title
 
 
+class ProgramStructure(models.Model):
+    """A card in the floating 'Program Structure' row overlapping the homepage hero."""
+
+    THEME_CHOICES = [
+        ('green', 'Green'),
+        ('gold', 'Gold'),
+        ('navy', 'Navy'),
+        ('rose', 'Rose'),
+    ]
+
+    # Tailwind classes applied to the icon box for each colour theme
+    THEME_STYLES = {
+        'green': 'bg-emerald-50 text-lacd-green group-hover:bg-lacd-green group-hover:text-lacd-gold',
+        'gold': 'bg-amber-50 text-amber-600 group-hover:bg-lacd-gold group-hover:text-lacd-navy',
+        'navy': 'bg-sky-50 text-sky-600 group-hover:bg-lacd-navy group-hover:text-lacd-gold',
+        'rose': 'bg-rose-50 text-rose-600 group-hover:bg-rose-600 group-hover:text-white',
+    }
+
+    title = models.CharField(max_length=200, help_text="Card heading e.g. Community Forest Governance")
+    description = models.TextField(max_length=300, help_text="Short copy shown under the heading")
+    icon_class = models.CharField(max_length=100, default='ri-leaf-line', help_text="Remix icon class name e.g. ri-tree-line")
+    theme = models.CharField(max_length=20, choices=THEME_CHOICES, default='green')
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['order', 'created_at']
+        verbose_name = 'Program Structure Card'
+        verbose_name_plural = 'Program Structure'
+
+    @property
+    def icon_box_classes(self):
+        return self.THEME_STYLES.get(self.theme, self.THEME_STYLES['green'])
+
+    def __str__(self):
+        return self.title
+
+
 # List of 15 Counties in Liberia for choice fields
 LIBERIA_COUNTIES = [
     ('bomi', 'Bomi'),

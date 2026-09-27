@@ -226,16 +226,17 @@ The administration panel contains these manageable sections:
 1. **Site Settings:** name, acronym, logo, contact details, address, and social links. This is a single organization-wide record.
 2. **Navigation Menus:** menu labels, URLs, ordering, badges, and child menu items.
 3. **Hero Slides:** homepage carousel content, images, buttons, order, and active state.
-4. **Development Programmes:** programme descriptions, locations, dates, budgets, beneficiaries, and featured state.
-5. **County Projects:** project details, status, progress, dates, partners, and featured state.
-6. **News and Updates:** articles, categories, authors, dates, images, and featured state.
-7. **Success Stories:** beneficiary stories, quotes, locations, images, and featured state.
-8. **Team Members:** people, roles, biographies, photos, order, and active state.
-9. **Clients and Partners:** organization names, logos, websites, order, and active state.
-10. **Publications and Reports:** downloadable PDF records and publication metadata.
-11. **Procurement Opportunities:** tenders, reference numbers, documents, deadlines, and status.
-12. **Career Vacancies:** job descriptions, requirements, deadlines, and status.
-13. **Contact Submissions:** enquiries received from the public. These are read-only records; staff can mark them as read.
+4. **Program Structure:** the four floating homepage cards below the hero — heading, short copy, icon, colour theme, order, and active state.
+5. **Development Programmes:** programme descriptions, locations, dates, budgets, beneficiaries, and featured state.
+6. **County Projects:** project details, status, progress, dates, partners, and featured state.
+7. **News and Updates:** articles, categories, authors, dates, images, and featured state.
+8. **Success Stories:** beneficiary stories, quotes, locations, images, and featured state.
+9. **Team Members:** people, roles, biographies, photos, order, and active state.
+10. **Clients and Partners:** organization names, logos, websites, order, and active state.
+11. **Publications and Reports:** downloadable PDF records and publication metadata.
+12. **Procurement Opportunities:** tenders, reference numbers, documents, deadlines, and status.
+13. **Career Vacancies:** job descriptions, requirements, deadlines, and status.
+14. **Contact Submissions:** enquiries received from the public. These are read-only records; staff can mark them as read.
 
 ## 4. Media submission checklist
 
@@ -331,6 +332,12 @@ Required: `title`, primary CTA text, primary CTA URL, display `order`, and `is_a
 
 Optional: badge text, description, slide image, secondary CTA text, and secondary CTA URL. Use internal paths such as `/programmes/`, `/projects/`, `/team/`, or `/contact/` for internal links.
 
+### Program structure cards
+
+Required: `title`, `description` (maximum 300 characters), and `is_active`.
+
+Optional: `icon_class` (Remix icon such as `ri-tree-line`), `theme` (one of `green`, `gold`, `navy`, `rose`), and `order`. Cards are numbered `01`, `02`, … automatically by display order. The grid shows up to four cards per row and hides itself when no card is active.
+
 ### Programmes
 
 Required: title, short description (maximum 500 characters), full description, status, county, and featured decision.
@@ -406,7 +413,6 @@ Visitors create these records; PADEV does not need to prepare them. The form req
 Provide final approved copy, or confirm that the current wording may remain, for:
 
 - Homepage hero headline, introductory paragraph, and CTA labels.
-- Four homepage focus cards: Community Forest Governance, Conservation Education, Livelihood & Enterprise, and Gender & Social Inclusion.
 - About section heading, organization summary, highlights, and founding-year statement.
 - Homepage impact figures: projects delivered, forest-fringed communities, beehives established, and counties reached. The current view uses the project count plus fixed values of `100`, `190`, and `15`; approve the exact figures and the `+` suffix.
 - Homepage introductions for programmes, projects, procurement, news, and contact.
@@ -421,6 +427,7 @@ Use one row per record and keep these field names unchanged. Put long descriptio
 
 ```text
 Program: title | icon_class | short_description | description | status | county | budget | target_beneficiaries | start_date | end_date | is_featured | meta_description | cover_image
+ProgramStructure: title | description | icon_class | theme | order | is_active
 Project: title | program_title | short_description | description | status | county | location_details | progress_percentage | budget | contractor | start_date | completion_date | is_featured | meta_description | cover_image
 News: title | author | category | excerpt | content_file | approved_publication_date | is_featured | meta_description | featured_image
 Story: title | beneficiary_name | county | quote | content_file | consent_reference | is_featured | meta_description | featured_image

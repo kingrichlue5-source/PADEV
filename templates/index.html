@@ -94,60 +94,28 @@
     </div>
 </section>
 
-<!-- FLOATING 4-METRIC CARDS OVERLAPPING HERO -->
+<!-- FLOATING 4-METRIC CARDS OVERLAPPING HERO (Program Structure — managed in Admin) -->
+{% if program_structure %}
 <section class="relative z-20 -mt-16 sm:-mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-        <!-- Card 01 -->
-        <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover-lift relative overflow-hidden group">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-lacd-green flex items-center justify-center text-2xl group-hover:bg-lacd-green group-hover:text-lacd-gold transition-colors">
-                    <i class="ri-tree-line"></i>
-                </div>
-                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">01</span>
-            </div>
-            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">Community Forest Governance</h4>
-            <p class="text-xs text-slate-500 leading-relaxed">Establishing and strengthening community forest governance entities with FDA and local leaders.</p>
-        </div>
+    <div class="grid grid-cols-1 {{ program_structure_cols }} gap-6">
 
-        <!-- Card 02 -->
+        {% for card in program_structure %}
+        <!-- Card {{ forloop.counter|stringformat:"02d" }} -->
         <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover-lift relative overflow-hidden group">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl group-hover:bg-lacd-gold group-hover:text-lacd-navy transition-colors">
-                    <i class="ri-megaphone-line"></i>
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl transition-colors {{ card.icon_box_classes }}">
+                    <i class="{{ card.icon_class }}"></i>
                 </div>
-                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">02</span>
+                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">{{ forloop.counter|stringformat:"02d" }}</span>
             </div>
-            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">Conservation Education</h4>
-            <p class="text-xs text-slate-500 leading-relaxed">Inspiring pupils through environmental clubs and community theater troupes.</p>
+            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">{{ card.title }}</h4>
+            <p class="text-xs text-slate-500 leading-relaxed">{{ card.description }}</p>
         </div>
-
-        <!-- Card 03 -->
-        <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover-lift relative overflow-hidden group">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center text-2xl group-hover:bg-lacd-navy group-hover:text-lacd-gold transition-colors">
-                    <i class="ri-seedling-line"></i>
-                </div>
-                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">03</span>
-            </div>
-            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">Livelihood & Enterprise</h4>
-            <p class="text-xs text-slate-500 leading-relaxed">Conservation agriculture and beekeeping that raise incomes for forest-fringed communities.</p>
-        </div>
-
-        <!-- Card 04 -->
-        <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hover-lift relative overflow-hidden group">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl group-hover:bg-rose-600 group-hover:text-white transition-colors">
-                    <i class="ri-women-line"></i>
-                </div>
-                <span class="font-heading font-extrabold text-3xl text-slate-200 group-hover:text-lacd-gold transition-colors">04</span>
-            </div>
-            <h4 class="font-heading font-bold text-lg text-lacd-navy mb-1">Gender & Social Inclusion</h4>
-            <p class="text-xs text-slate-500 leading-relaxed">Inclusion of women, boys, girls, and marginalized people in all project activities.</p>
-        </div>
+        {% endfor %}
 
     </div>
 </section>
+{% endif %}
 
 <!-- ABOUT SPLIT SECTION (EDUKA STYLE) -->
 <section id="about" class="py-24 bg-white relative">

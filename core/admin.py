@@ -8,7 +8,7 @@ from unfold.decorators import display
 from .models import (
     Program, Project, NewsUpdate, SuccessStory, TeamMember, Client,
     Publication, ProcurementOpportunity, Career, ContactSubmission,
-    SiteSetting, NavigationMenu, HeroSlide,
+    SiteSetting, NavigationMenu, HeroSlide, ProgramStructure,
 )
 from hitcount.models import HitCount, Hit, BlacklistIP, BlacklistUserAgent
 
@@ -113,6 +113,40 @@ class HeroSlideAdmin(ModelAdmin):
     )
     def display_status(self, instance):
         return "Active" if instance.is_active else "Inactive"
+
+
+# ─── Program Structure (homepage floating cards) ───
+
+@admin.register(ProgramStructure)
+class ProgramStructureAdmin(ModelAdmin):
+    list_display = ('title', 'display_theme', 'icon_class', 'order', 'is_active')
+    list_filter = ('theme', 'is_active')
+    search_fields = ('title', 'description')
+    list_editable = ('order', 'is_active')
+    compressed_fields = True
+    fieldsets = (
+        ('Card Content', {
+            'fields': ('title', 'description', 'icon_class'),
+        }),
+        ('Appearance', {
+            'fields': ('theme',),
+        }),
+        ('Settings', {
+            'fields': ('order', 'is_active'),
+        }),
+    )
+
+    @display(
+        description="Theme",
+        label={
+            "Green": "success",
+            "Gold": "warning",
+            "Navy": "info",
+            "Rose": "danger",
+        },
+    )
+    def display_theme(self, instance):
+        return instance.get_theme_display()
 
 
 # ─── Programs ───

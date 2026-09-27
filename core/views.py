@@ -6,7 +6,7 @@ from django.db.models import Q
 from .models import (
     Program, Project, NewsUpdate, SuccessStory, TeamMember, Client,
     Publication, ProcurementOpportunity, Career, ContactSubmission,
-    HeroSlide, SiteSetting, LIBERIA_COUNTIES,
+    HeroSlide, SiteSetting, ProgramStructure, LIBERIA_COUNTIES,
 )
 
 CATEGORY_TITLES = {
@@ -30,12 +30,32 @@ def _team_payload(members, start):
         for i, m in enumerate(members)
     ]
 
+
+def _structure_grid_cols(count):
+    """Tailwind grid column classes for the floating Program Structure cards."""
+    if count <= 1:
+        return 'lg:grid-cols-1'
+    if count == 2:
+        return 'sm:grid-cols-2 lg:grid-cols-2'
+    if count == 3:
+        return 'sm:grid-cols-2 lg:grid-cols-3'
+    return 'sm:grid-cols-2 lg:grid-cols-4'
+
+
 class HomeView(TemplateView):
     template_name = 'index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hero_slides'] = HeroSlide.objects.filter(is_active=True).order_by('order', 'created_at')
+
+        # Floating "Program Structure" cards below the hero
+        structure_cards = list(
+            ProgramStructure.objects.filter(is_active=True).order_by('order', 'created_at')
+        )
+        context['program_structure'] = structure_cards
+        context['program_structure_cols'] = _structure_grid_cols(len(structure_cards))
+
         context['programs'] = Program.objects.filter(is_featured=True)[:4]
         context['projects'] = Project.objects.filter(is_featured=True)[:3]
         context['news_list'] = NewsUpdate.objects.all()[:3]
