@@ -158,9 +158,21 @@ class Command(BaseCommand):
             action='store_true',
             help='Overwrite the title, text, icon and theme of cards that already exist.',
         )
+        parser.add_argument(
+            '--if-unseeded',
+            action='store_true',
+            help='Do nothing unless none of the five cards are in the database yet.',
+        )
 
     def handle(self, *args, **options):
         force = options['force']
+
+        if options['if_unseeded']:
+            target_slugs = {slugify(card['title']) for card in CARDS}
+            if ProgramStructure.objects.filter(slug__in=target_slugs).exists():
+                self.stdout.write('Program Structure cards already present, nothing to do.')
+                return
+
         created = updated = skipped = 0
 
         # 1. Section heading + introduction (only if they were cleared)

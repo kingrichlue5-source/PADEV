@@ -63,7 +63,7 @@ PROJECTS = [
         'status': 'ongoing',
         'county': 'national',
         'location_details': "Northwest Liberia: Lofa, Gbarpolu and Grand Cape Mount Counties",
-        'donor': "GEF (Global Environmental Fund)",
+        'donor': "Global Environment Facility (GEF)",
         'implementing_agency': "Environmental Protection Agency (EPA)",
         'partners': "Society for the Conservation of Nature of Liberia (SCNL)",
         'start_date': date(2026, 5, 20),
@@ -317,9 +317,21 @@ class Command(BaseCommand):
             action='store_true',
             help='Overwrite every field of projects that already exist.',
         )
+        parser.add_argument(
+            '--if-unseeded',
+            action='store_true',
+            help='Do nothing unless none of these five projects are in the database yet.',
+        )
 
     def handle(self, *args, **options):
         force = options['force']
+
+        if options['if_unseeded']:
+            target_slugs = {slugify(data['title']) for data in PROJECTS}
+            if Project.objects.filter(slug__in=target_slugs).exists():
+                self.stdout.write('Projects already present, nothing to do.')
+                return
+
         created = updated = skipped = 0
 
         for data in PROJECTS:

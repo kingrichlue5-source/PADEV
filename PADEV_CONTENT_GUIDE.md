@@ -340,7 +340,7 @@ Required: `title`, `description` (maximum 300 characters), and `is_active`.
 
 Optional: `detail_content` (the full article opened when the title is clicked; new paragraphs start on a new line, lines starting with `-` become bullet points, and words wrapped in `**` are shown in bold), `icon_class` (Remix icon such as `ri-tree-line`), `theme` (one of `green`, `gold`, `navy`, `rose`), `slug`, and `order`. Cards are numbered `01`, `02`, … automatically by display order. The grid uses three columns for three to six active cards, four columns above that, and hides itself when no card is active. The card title is a link; when `detail_content` is empty the page repeats the short description instead.
 
-The live site loads five cards — Forest Governance, Livelihood & Enterprise Development, Strategic Communications, Stakeholder Engagement, and Training and Facilitation — with the approved long-form text already in place. `python manage.py load_program_structure` seeds those five into an empty database and retires the older fallback cards; it never overwrites text an editor has saved (unless `--force` is passed), so it is safe to run at any time.
+The live site loads five cards — Forest Governance, Livelihood & Enterprise Development, Strategic Communications, Stakeholder Engagement, and Training and Facilitation — with the approved long-form text already in place. `python manage.py load_program_structure` seeds those five into an empty database and retires the older fallback cards; it never overwrites text an editor has saved (unless `--force` is passed), so it is safe to run at any time. Every deploy also runs it with `--if-unseeded`, which does nothing at all once the five cards exist — so the first deploy after a fresh database fills itself, and the command never fights an editor afterwards.
 
 ### Programmes
 
@@ -360,7 +360,9 @@ Optional: related programme, cover image, location details, budget, contractor, 
 
 On the detail page the description is rendered as paragraphs (blank line = new paragraph), bullets (a line starting with `-`) and bold section headings (wrapped in `**`), and the donor, agency, dates, partners and report link are shown in the factsheet above it. Empty rows such as a missing budget are hidden automatically.
 
-The live site carries five project factsheets — Guinea Forest Integrated Programs (GFIP), Community-Based Forestry and Protected Area Management (CBFM), the LiFE-P national and regional consultations, USAID Conservation Works, and the Sapo Forest Landscape grant. `python manage.py load_projects` seeds those five into an empty database; it never overwrites a project an editor has saved (unless `--force`), so it is safe to run at any time.
+The live site carries five project factsheets — Guinea Forest Integrated Programs (GFIP), Community-Based Forestry and Protected Area Management (CBFM), the LiFE-P national and regional consultations, USAID Conservation Works, and the Sapo Forest Landscape grant. `python manage.py load_projects` seeds those five into an empty database; it never overwrites a project an editor has saved (unless `--force`), so it is safe to run at any time. Every deploy also runs it with `--if-unseeded`, so it acts only on the first deploy into an empty database.
+
+The homepage **County Tracker** shows up to three running projects (`Ongoing / In Progress`), with featured ones listed first, and falls back to featured projects when nothing is running. The whole section hides itself when there are no projects, so a heading never sits above an empty grid.
 
 Allowed statuses: `Planning`, `Ongoing / In Progress`, `Completed`, `On Hold`.
 

@@ -362,6 +362,7 @@
     </div>
 </section>
 
+{% if projects %}
 <!-- COUNTY PROJECT TRACKER PREVIEW SECTION -->
 <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -396,7 +397,7 @@
                     </h3>
 
                     <p class="text-xs text-slate-500 leading-relaxed">
-                        {{ project.short_description }}
+                        {{ project.short_description|truncatewords:18 }}
                     </p>
                 </div>
 
@@ -415,6 +416,7 @@
 
     </div>
 </section>
+{% endif %}
 
 <!-- PROCUREMENT & TENDERS HIGHLIGHT SECTION -->
 <section class="py-20 bg-slate-900 text-white relative overflow-hidden">

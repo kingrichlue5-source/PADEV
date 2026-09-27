@@ -60,7 +60,12 @@ class HomeView(TemplateView):
         # "Our Core Programmes" grid — every published programme (up to 6),
         # with featured ones listed first if more than six exist
         context['programs'] = Program.objects.order_by('-is_featured', '-created_at')[:6]
-        context['projects'] = Project.objects.filter(is_featured=True)[:3]
+        # "Active County Projects" — projects still running, featured ones first,
+        # falling back to featured projects if nothing is currently running
+        active_projects = list(
+            Project.objects.filter(status='ongoing').order_by('-is_featured', '-created_at')[:3]
+        )
+        context['projects'] = active_projects or list(Project.objects.filter(is_featured=True)[:3])
         context['news_list'] = NewsUpdate.objects.all()[:3]
         context['success_stories'] = SuccessStory.objects.filter(is_featured=True)[:3]
         context['clients'] = Client.objects.filter(is_active=True)
