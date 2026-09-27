@@ -146,13 +146,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             <!-- Brand Logo -->
             <a href="{% url 'core:home' %}" class="flex items-center gap-3 group">
-                <div class="w-12 h-12 rounded-xl bg-lacd-green flex items-center justify-center text-lacd-gold text-2xl font-bold shadow-md group-hover:scale-105 transition-transform overflow-hidden">
-                    {% if site_settings.logo %}
-                        <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" class="w-full h-full object-cover">
-                    {% else %}
+                {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" class="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform">
+                {% else %}
+                    <div class="w-12 h-12 rounded-xl bg-lacd-green flex items-center justify-center text-lacd-gold text-2xl font-bold shadow-md group-hover:scale-105 transition-transform">
                         <i class="ri-building-4-line"></i>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
                 <div class="flex flex-col">
                     <span class="font-heading font-extrabold text-xl leading-tight text-lacd-green group-hover:text-lacd-navy transition-colors">{{ site_settings.agency_acronym }}</span>
                     <span class="text-[10px] tracking-wider font-semibold uppercase text-slate-500">{{ site_settings.site_name }}</span>
