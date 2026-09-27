@@ -13,8 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /**
  * Hero Headline Rotator
- * Cross-fades the headline lines stored in Site Settings -> Hero Text,
- * one blank line per headline, at a deliberately slow pace.
+ * Shows the headlines stored in Site Settings -> Hero Text one at a time,
+ * deliberately slowly: the current headline fades all the way out, the block
+ * glides to the height of the next headline, and only then does the next one
+ * fade in. Two headlines are never on screen together.
  */
 function initHeadlineRotator() {
   const rotator = document.querySelector('[data-headline-rotator]');
@@ -26,20 +28,47 @@ function initHeadlineRotator() {
   // Respect visitors who ask for reduced motion: the first line simply stays.
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const interval = parseInt(rotator.dataset.interval, 10) || 7000;
+  const hold = parseInt(rotator.dataset.interval, 10) || 10000; // rest between headlines
+  const fade = 2000; // must match `transition: opacity` in custom.css
+  const glide = 600; // must match `transition: height` in custom.css
   let index = 0;
 
-  window.setInterval(() => {
-    if (document.hidden) return;
+  const show = (i, visible) => {
+    items[i].classList.toggle('is-hidden', !visible);
+    if (visible) items[i].removeAttribute('aria-hidden');
+    else items[i].setAttribute('aria-hidden', 'true');
+  };
 
-    items[index].classList.add('is-hidden');
-    items[index].setAttribute('aria-hidden', 'true');
+  // Size the block to the headline currently on screen.
+  const measure = () => {
+    rotator.style.height = items[index].offsetHeight + 'px';
+  };
 
-    index = (index + 1) % items.length;
+  const cycle = () => {
+    if (document.hidden) {
+      window.setTimeout(cycle, hold + fade);
+      return;
+    }
 
-    items[index].classList.remove('is-hidden');
-    items[index].removeAttribute('aria-hidden');
-  }, interval);
+    const upcoming = (index + 1) % items.length;
+
+    show(index, false); // 1. fade this headline all the way out …
+    window.setTimeout(() => {
+      index = upcoming;
+      measure(); // 2. … glide the block to the next headline's height …
+      window.setTimeout(() => {
+        measure(); // fonts may have settled during the glide — re-check
+        show(index, true); // 3. … and only now fade the next one in.
+        window.setTimeout(cycle, hold + fade);
+      }, glide);
+    }, fade);
+  };
+
+  rotator.classList.add('is-managed');
+  measure();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  window.addEventListener('resize', measure);
+  window.setTimeout(cycle, hold + fade);
 }
 
 /**

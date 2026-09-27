@@ -44,7 +44,7 @@ class SiteSettingAdmin(ModelAdmin):
         ('Branding', {'fields': ('site_name', 'agency_acronym', 'logo')}),
         ('Hero Section', {
             'fields': ('hero_background_image', 'hero_text'),
-            'description': 'Background image behind the homepage hero, and the rotating "Hero Text" headlines. Separate headlines with a blank line — they fade in and out slowly, one after another. Start a new line for a line break; wrap words in ** to show them in the gold gradient.',
+            'description': 'Background image behind the homepage hero, and the rotating "Hero Text" headlines. Separate headlines with a blank line. One headline is on screen at a time: it fades out over two seconds, the block glides to the next headline, that fades in, and rests for ten seconds — so two headlines never overlap and the layout never jumps. Start a new line for a line break; wrap words in ** to show them in the gold gradient.',
         }),
         ('Program Structure Section', {
             'fields': ('program_structure_heading', 'program_structure_intro'),

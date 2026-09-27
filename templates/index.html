@@ -26,7 +26,7 @@
                 </div>
 
                 {% if site_settings.hero_text %}
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold leading-tight text-white tracking-tight hero-headlines" data-headline-rotator data-interval="7000">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold leading-tight text-white tracking-tight hero-headlines" data-headline-rotator data-interval="10000">
                     {% for headline in site_settings.hero_text|hero_headlines %}
                     <span class="hero-headline{% if not forloop.first %} is-hidden{% endif %}"{% if not forloop.first %} aria-hidden="true"{% endif %}>{{ headline }}</span>
                     {% endfor %}

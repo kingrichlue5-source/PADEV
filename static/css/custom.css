@@ -104,21 +104,36 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   color: var(--accent-color);
 }
 
-/* Hero headlines: one tall grid cell, slow cross-fade between the lines */
+/* Hero headlines: only ever one headline on screen. Without JavaScript the
+   lines share one tall grid cell (the first shows, the rest wait); with
+   JavaScript the block is sized to the headline on screen, so the layout
+   never leaves a gap and lines are never seen overlapping. */
 .hero-headlines {
   display: grid;
 }
 .hero-headlines > .hero-headline {
   grid-area: 1 / 1;
   opacity: 1;
-  transition: opacity 1600ms ease-in-out;
+  transition: opacity 2000ms ease-in-out;
 }
 .hero-headlines > .hero-headline.is-hidden {
   opacity: 0;
   pointer-events: none;
 }
+.hero-headlines.is-managed {
+  display: block;
+  position: relative;
+  transition: height 600ms ease-in-out;
+}
+.hero-headlines.is-managed > .hero-headline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
 @media (prefers-reduced-motion: reduce) {
-  .hero-headlines > .hero-headline {
+  .hero-headlines > .hero-headline,
+  .hero-headlines.is-managed {
     transition: none;
   }
 }
