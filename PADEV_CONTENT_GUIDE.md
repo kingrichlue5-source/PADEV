@@ -350,6 +350,10 @@ Optional: icon class, cover image, budget, target beneficiaries, start date, end
 
 Card behaviour: the homepage and Programmes page show the title plus the first 15–20 words of the short description (the full text appears on the detail page), and the budget and target rows are hidden automatically whenever they are empty or literally `None`.
 
+Photo gallery: each programme also holds any number of gallery photos (admin area **Programmes → Photo Gallery**, one row per photo: `image`, `caption`, `sort_order`). The detail page shows them in a “Programme in Pictures” gallery — a scrolling strip of thumbnails that opens a full-screen lightbox with the caption underneath — and the whole gallery hides itself when a programme has no photos. The **cover image** stays the card photo on the homepage and Programmes page; when the cover image is empty (or its file is missing), the card falls back to the first gallery photo automatically. Captions are optional but recommended; sort order is ascending, so lower numbers appear first.
+
+Seeding: `python manage.py seed_program_gallery` uploads the photos already delivered for Livelihood & Enterprise Development into an empty database. Every deploy runs it; it never re-uploads a photo that is already stored, and a photo an editor deletes stays deleted, so it is safe at any time.
+
 Allowed statuses: `Active`, `Upcoming`, `Completed`. Allowed counties are listed in Section 15.
 
 ### Projects
@@ -440,6 +444,7 @@ Use one row per record and keep these field names unchanged. Put long descriptio
 
 ```text
 Program: title | icon_class | short_description | description | status | county | budget | target_beneficiaries | start_date | end_date | is_featured | meta_description | cover_image
+ProgramPhoto: program_slug | image | caption | sort_order
 ProgramStructure: title | description | detail_content | icon_class | theme | order | is_active
 HeroSlide: badge_text | title | description | detail_content | slide_image | order | is_active
 Project: title | program_title | short_description | description | status | county | location_details | progress_percentage | budget | contractor | donor | implementing_agency | partners | report_link | start_date | completion_date | is_featured | meta_description | cover_image
@@ -488,7 +493,7 @@ Reading the export:
 - Use original PADEV photographs or images for which PADEV has permission.
 - Name files clearly, for example `project-name-location-year.jpg`.
 - Prefer landscape images for hero slides and cards; provide high-resolution headshots for team profiles.
-- Provide a caption, photographer/credit, and consent reference in the media index, even though the current CMS has no dedicated caption fields.
+- Provide a caption, photographer/credit, and consent reference in the media index. Programme gallery photos have a dedicated caption field in the CMS; other image fields still have none, so keep captions in the media index.
 - Provide logos as SVG, PNG, or high-resolution JPG files with transparent backgrounds where possible.
 - Upload final, accessible PDFs for publications and tenders; confirm that they contain no confidential information.
 - Keep original files and signed consent records outside public media folders.

@@ -9,7 +9,80 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initModals();
   initHeadlineRotator();
+  initGalleryLightbox();
 });
+
+/**
+ * Programme Photo Gallery Lightbox
+ * Programme detail pages render a photo grid; clicking a photo opens the
+ * full-size image with its caption in an overlay with next/prev navigation.
+ */
+function initGalleryLightbox() {
+  const items = Array.from(document.querySelectorAll('[data-gallery-src]'));
+  const lightbox = document.getElementById('gallery-lightbox');
+  if (!items.length || !lightbox) return;
+
+  const img = document.getElementById('gallery-lightbox-img');
+  const caption = document.getElementById('gallery-lightbox-caption');
+  const btnClose = document.getElementById('gallery-lightbox-close');
+  const btnPrev = document.getElementById('gallery-lightbox-prev');
+  const btnNext = document.getElementById('gallery-lightbox-next');
+  let current = 0;
+  let lastFocused = null;
+
+  const show = (index) => {
+    current = (index + items.length) % items.length;
+    const item = items[current];
+    img.src = item.dataset.gallerySrc;
+    img.alt = item.dataset.galleryCaption || '';
+    caption.textContent = item.dataset.galleryCaption || '';
+    // Hide arrows when there is only one photo to view.
+    const single = items.length < 2;
+    btnPrev.style.display = single ? 'none' : '';
+    btnNext.style.display = single ? 'none' : '';
+  };
+
+  const open = (index) => {
+    lastFocused = document.activeElement;
+    show(index);
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    btnClose.focus();
+  };
+
+  const close = () => {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  };
+
+  items.forEach((item, index) => {
+    item.addEventListener('click', () => open(index));
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open(index);
+      }
+    });
+  });
+
+  btnClose.addEventListener('click', close);
+  btnPrev.addEventListener('click', (e) => { e.stopPropagation(); show(current - 1); });
+  btnNext.addEventListener('click', (e) => { e.stopPropagation(); show(current + 1); });
+  // Click anywhere on the backdrop (not the photo or buttons) closes.
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) close();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.classList.contains('hidden')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') show(current - 1);
+    else if (e.key === 'ArrowRight') show(current + 1);
+  });
+}
 
 /**
  * Hero Headline Rotator

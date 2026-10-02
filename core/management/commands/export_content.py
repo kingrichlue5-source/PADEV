@@ -178,6 +178,18 @@ SPECS = (
         ),
     },
     {
+        'key': 'programme_photo',
+        'filename': 'ProgramPhoto.csv',
+        'model': models.ProgramImage,
+        'columns': (
+            ('id', _pk),
+            ('program_slug', lambda r: r.program.slug if r.program_id else ''),
+            ('image', _raw('image')),
+            ('caption', _raw('caption')),
+            ('sort_order', _raw('sort_order')),
+        ),
+    },
+    {
         'key': 'project',
         'filename': 'Project.csv',
         'model': models.Project,

@@ -6,7 +6,7 @@ from django.utils.html import format_html
 from unfold.admin import ModelAdmin, TabularInline, StackedInline
 from unfold.decorators import display
 from .models import (
-    Program, Project, NewsUpdate, SuccessStory, TeamMember, Client,
+    Program, ProgramImage, Project, NewsUpdate, SuccessStory, TeamMember, Client,
     Publication, ProcurementOpportunity, Career, ContactSubmission,
     SiteSetting, NavigationMenu, HeroSlide, ProgramStructure,
 )
@@ -189,6 +189,16 @@ class ProgramStructureAdmin(ModelAdmin):
 
 # ─── Programs ───
 
+class ProgramImageInline(TabularInline):
+    model = ProgramImage
+    extra = 1
+    fields = ('image', 'caption', 'sort_order')
+    readonly_fields = ()
+    ordering = ('sort_order', 'created_at')
+    verbose_name = 'Photo'
+    verbose_name_plural = 'Photo Gallery'
+
+
 @admin.register(Program)
 class ProgramAdmin(ModelAdmin):
     list_display = ('title', 'display_status', 'county', 'budget', 'is_featured', 'created_at')
@@ -198,6 +208,19 @@ class ProgramAdmin(ModelAdmin):
     list_editable = ('is_featured',)
     list_filter_submit = True
     compressed_fields = True
+    inlines = [ProgramImageInline]
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'slug', 'icon_class', 'short_description', 'description', 'cover_image'),
+            'description': 'Cover image: the single photo shown on programme cards. '
+                           'Add any number of gallery photos below — they appear in the '
+                           '"Photo Gallery" on this programme\'s detail page; the first one '
+                           'also becomes the card image when no cover is set.',
+        }),
+        ('Classification', {'fields': ('status', 'county', 'is_featured')}),
+        ('Details', {'fields': ('budget', 'target_beneficiaries', 'start_date', 'end_date')}),
+        ('SEO', {'fields': ('meta_description',)}),
+    )
 
     @display(
         description="Status",

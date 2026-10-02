@@ -396,8 +396,33 @@ class Program(models.Model):
     def get_absolute_url(self):
         return reverse('core:program_detail', kwargs={'slug': self.slug})
 
+    @property
+    def card_image(self):
+        """Image shown on programme cards: the cover image when set,
+        otherwise the first gallery photo (by sort order)."""
+        if self.cover_image:
+            return self.cover_image
+        first = self.gallery_images.first()
+        return first.image if first else None
+
     def __str__(self):
         return self.title
+
+
+class ProgramImage(models.Model):
+    program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='gallery_images')
+    image = models.ImageField(upload_to='programs/gallery/')
+    caption = models.TextField(blank=True, help_text="Caption shown under the photo on the programme detail page. Leave blank for no caption.")
+    sort_order = models.PositiveIntegerField(default=0, help_text="Lower numbers appear first.")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['sort_order', 'created_at']
+        verbose_name = 'Programme Photo'
+        verbose_name_plural = 'Programme Photos'
+
+    def __str__(self):
+        return "%s photo %s" % (self.program.title, self.pk)
 
 
 class Project(models.Model):
