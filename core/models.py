@@ -552,6 +552,22 @@ class NewsUpdate(models.Model):
         return self.title
 
 
+class NewsImage(models.Model):
+    news = models.ForeignKey(NewsUpdate, on_delete=models.CASCADE, related_name='gallery_images')
+    image = models.ImageField(upload_to='news/gallery/')
+    caption = models.TextField(blank=True, help_text="Caption shown under the photo on the article page. Leave blank for no caption.")
+    sort_order = models.PositiveIntegerField(default=0, help_text="Lower numbers appear first.")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['sort_order', 'created_at']
+        verbose_name = 'News Photo'
+        verbose_name_plural = 'News Photos'
+
+    def __str__(self):
+        return "%s photo %s" % (self.news.title, self.pk)
+
+
 class SuccessStory(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, max_length=255, blank=True)

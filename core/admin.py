@@ -6,7 +6,7 @@ from django.utils.html import format_html
 from unfold.admin import ModelAdmin, TabularInline, StackedInline
 from unfold.decorators import display
 from .models import (
-    Program, ProgramImage, Project, NewsUpdate, SuccessStory, TeamMember, Client,
+    Program, ProgramImage, Project, NewsUpdate, NewsImage, SuccessStory, TeamMember, Client,
     Publication, ProcurementOpportunity, Career, ContactSubmission,
     SiteSetting, NavigationMenu, HeroSlide, ProgramStructure,
 )
@@ -199,6 +199,16 @@ class ProgramImageInline(TabularInline):
     verbose_name_plural = 'Photo Gallery'
 
 
+class NewsImageInline(TabularInline):
+    model = NewsImage
+    extra = 1
+    fields = ('image', 'caption', 'sort_order')
+    readonly_fields = ()
+    ordering = ('sort_order', 'created_at')
+    verbose_name = 'Photo'
+    verbose_name_plural = 'Photo Gallery'
+
+
 @admin.register(Program)
 class ProgramAdmin(ModelAdmin):
     list_display = ('title', 'display_status', 'county', 'budget', 'is_featured', 'created_at')
@@ -287,6 +297,7 @@ class NewsUpdateAdmin(ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     list_editable = ('is_featured',)
     list_filter_submit = True
+    inlines = [NewsImageInline]
 
     @display(
         description="Category",
