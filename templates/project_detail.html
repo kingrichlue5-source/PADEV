@@ -81,4 +81,51 @@
         </div>
     </div>
 </section>
+
+{% with gallery=project.gallery_images.all %}
+{% if gallery %}
+<!-- Photo Gallery -->
+<section class="py-16 bg-slate-50" id="gallery">
+    <div class="max-w-5xl mx-auto px-4 space-y-8">
+        <div class="text-center space-y-3">
+            <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-amber-900 text-xs font-bold uppercase tracking-wider">
+                <i class="ri-camera-line"></i> Photo Gallery
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-heading font-extrabold text-lacd-navy">{{ project.title }} in Pictures</h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {% for photo in gallery %}
+            <figure class="group bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover-lift cursor-zoom-in"
+                    data-gallery-src="{{ photo.image.url }}"
+                    data-gallery-caption="{{ photo.caption|escapejs }}"
+                    role="button" tabindex="0" aria-label="View photo {{ forloop.counter }}{% if photo.caption %}: {{ photo.caption|truncatewords:12 }}{% endif %}">
+                <div class="relative overflow-hidden">
+                    <img src="{{ photo.image.url }}" loading="lazy"
+                         alt="{{ photo.caption|default:project.title }}"
+                         class="w-full h-60 object-cover transition-transform duration-500 group-hover:scale-105">
+                    <span class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 text-lacd-navy flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow">
+                        <i class="ri-zoom-in-line"></i>
+                    </span>
+                </div>
+                {% if photo.caption %}
+                <figcaption class="p-4 text-xs text-slate-600 leading-relaxed">{{ photo.caption }}</figcaption>
+                {% endif %}
+            </figure>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Photo Lightbox -->
+<div id="gallery-lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-lacd-navy/95 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button type="button" id="gallery-lightbox-close" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white text-2xl flex items-center justify-center transition-colors" aria-label="Close"><i class="ri-close-line"></i></button>
+    <button type="button" id="gallery-lightbox-prev" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white text-2xl flex items-center justify-center transition-colors" aria-label="Previous photo"><i class="ri-arrow-left-s-line"></i></button>
+    <button type="button" id="gallery-lightbox-next" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white text-2xl flex items-center justify-center transition-colors" aria-label="Next photo"><i class="ri-arrow-right-s-line"></i></button>
+    <figure class="max-w-4xl w-full flex flex-col items-center gap-4">
+        <img id="gallery-lightbox-img" src="" alt="" class="max-h-[70vh] max-w-full rounded-xl shadow-2xl object-contain">
+        <figcaption id="gallery-lightbox-caption" class="text-sm text-slate-200 text-center max-w-2xl px-12 leading-relaxed"></figcaption>
+    </figure>
+</div>
+{% endif %}
+{% endwith %}
 {% endblock %}

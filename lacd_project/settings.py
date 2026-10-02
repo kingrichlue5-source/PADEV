@@ -398,7 +398,7 @@ UNFOLD = {
                 "separator": True,
                 "items": [
                     {
-                        "title": _("News & Updates"),
+                        "title": _("News & Articles"),
                         "icon": "newspaper",
                         "link": reverse_lazy("admin:core_newsupdate_changelist"),
                     },

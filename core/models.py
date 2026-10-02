@@ -473,6 +473,22 @@ class Project(models.Model):
         return f"{self.title} ({self.get_county_display()})"
 
 
+class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='gallery_images')
+    image = models.ImageField(upload_to='projects/gallery/')
+    caption = models.TextField(blank=True, help_text="Caption shown under the photo on the project detail page. Leave blank for no caption.")
+    sort_order = models.PositiveIntegerField(default=0, help_text="Lower numbers appear first.")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['sort_order', 'created_at']
+        verbose_name = 'Project Photo'
+        verbose_name_plural = 'Project Photos'
+
+    def __str__(self):
+        return "%s photo %s" % (self.project.title, self.pk)
+
+
 class TeamMember(models.Model):
     ROLE_CHOICES = [
         ('management', 'Management Team'),
@@ -516,7 +532,7 @@ class Client(models.Model):
 
 class NewsUpdate(models.Model):
     CATEGORY_CHOICES = [
-        ('press_release', 'Press Release'),
+        ('press_release', 'Articles'),
         ('announcement', 'Agency Announcement'),
         ('field_update', 'Field Progress Update'),
         ('event', 'Official Event'),
@@ -537,8 +553,8 @@ class NewsUpdate(models.Model):
 
     class Meta:
         ordering = ['-published_date', '-created_at']
-        verbose_name = 'News & Update'
-        verbose_name_plural = 'News & Updates'
+        verbose_name = 'News & Article'
+        verbose_name_plural = 'News & Articles'
 
     def save(self, *args, **kwargs):
         if not self.slug:

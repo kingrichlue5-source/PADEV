@@ -218,6 +218,18 @@ SPECS = (
         ),
     },
     {
+        'key': 'project_photo',
+        'filename': 'ProjectPhoto.csv',
+        'model': models.ProjectImage,
+        'columns': (
+            ('id', _pk),
+            ('project_slug', lambda r: r.project.slug if r.project_id else ''),
+            ('image', _raw('image')),
+            ('caption', _raw('caption')),
+            ('sort_order', _raw('sort_order')),
+        ),
+    },
+    {
         'key': 'news',
         'filename': 'News.csv',
         'model': models.NewsUpdate,
@@ -233,6 +245,18 @@ SPECS = (
             ('is_featured', _raw('is_featured')),
             ('meta_description', _raw('meta_description')),
             ('featured_image', _raw('featured_image')),
+        ),
+    },
+    {
+        'key': 'news_photo',
+        'filename': 'NewsPhoto.csv',
+        'model': models.NewsImage,
+        'columns': (
+            ('id', _pk),
+            ('news_slug', lambda r: r.news.slug if r.news_id else ''),
+            ('image', _raw('image')),
+            ('caption', _raw('caption')),
+            ('sort_order', _raw('sort_order')),
         ),
     },
     {
@@ -360,7 +384,7 @@ How the files are laid out
 * TRUE / FALSE are used for yes/no columns.
 * Choice columns (status, county, category, theme, role, job type) contain the human
   labels listed in sections 10 and 15 of the guide, for example "Nationwide / Multiple
-  Counties" or "Press Release".
+  Counties" or "Articles".
 * Image and PDF columns contain the stored file path, for example
   "programs/forest-governance.jpg". The files themselves are not included; download them
   from the media library or Cloudinary separately.

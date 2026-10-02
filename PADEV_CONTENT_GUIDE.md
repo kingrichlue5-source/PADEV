@@ -368,15 +368,19 @@ The live site carries five project factsheets — Guinea Forest Integrated Progr
 
 The homepage **County Tracker** shows up to three running projects (`Ongoing / In Progress`), with featured ones listed first, and falls back to featured projects when nothing is running. The whole section hides itself when there are no projects, so a heading never sits above an empty grid.
 
+Photo gallery: each project also holds any number of gallery photos (admin area **Projects → Photo Gallery**, one row per photo: `image`, `caption`, `sort_order`). The photos appear **only on the project detail page** — never on the homepage or the Projects listing — in a gallery that opens a full-screen lightbox with the caption; the section hides itself when a project has no photos. The card image on listings stays the cover image.
+
 Allowed statuses: `Planning`, `Ongoing / In Progress`, `Completed`, `On Hold`.
 
-### News and updates
+### News and articles
 
 Required: title, category, excerpt (maximum 400 characters), and full article content.
 
 Optional: author, featured image, featured decision, and SEO meta description (maximum 160 characters). The current database generates `published_date` when a record is first created, so provide the approved date to the administrator for verification or adjustment.
 
-Allowed categories: `Press Release`, `Agency Announcement`, `Field Progress Update`, `Official Event`.
+Photo gallery: each article also holds any number of gallery photos (admin area **News & Articles → Photo Gallery**, one row per photo: `image`, `caption`, `sort_order`). The article page shows them in a gallery below the article, opening a full-screen lightbox with the caption; the section hides itself when an article has no photos.
+
+Allowed categories: `Articles`, `Agency Announcement`, `Field Progress Update`, `Official Event`.
 
 ### Success stories
 
@@ -448,7 +452,9 @@ ProgramPhoto: program_slug | image | caption | sort_order
 ProgramStructure: title | description | detail_content | icon_class | theme | order | is_active
 HeroSlide: badge_text | title | description | detail_content | slide_image | order | is_active
 Project: title | program_title | short_description | description | status | county | location_details | progress_percentage | budget | contractor | donor | implementing_agency | partners | report_link | start_date | completion_date | is_featured | meta_description | cover_image
+ProjectPhoto: project_slug | image | caption | sort_order
 News: title | author | category | excerpt | content_file | approved_publication_date | is_featured | meta_description | featured_image
+NewsPhoto: news_slug | image | caption | sort_order
 Story: title | beneficiary_name | county | quote | content_file | consent_reference | is_featured | meta_description | featured_image
 Team: full_name | position | role_category | bio | photo | email | order | is_active
 Partner: name | logo | website | order | is_active | public_display_approved
@@ -481,7 +487,7 @@ limits the export to selected content types.
 Reading the export:
 
 - The first column is always `id`, and the second is `slug` where one exists. Both are system values — keep them, but never rename or delete them. Every other column keeps the field name shown in the templates above.
-- Choice columns (status, county, category, theme, role category, job type) hold the human labels from sections 10 and 15, for example `Nationwide / Multiple Counties` or `Press Release`.
+- Choice columns (status, county, category, theme, role category, job type) hold the human labels from sections 10 and 15, for example `Nationwide / Multiple Counties` or `Articles`.
 - Dates use `YYYY-MM-DD`; procurement closing times use `2026-10-31 17:00 (GMT+00:00)` in local Monrovia time; yes/no columns use `TRUE` / `FALSE`.
 - Image and PDF columns contain the stored file path such as `programs/forest-governance.jpg`. The files themselves are not in the export.
 - Full article text sits inside the CSV under the `content_file` column, so a cell may hold several paragraphs — keep the line breaks.
