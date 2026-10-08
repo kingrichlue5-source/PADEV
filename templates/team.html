@@ -21,7 +21,7 @@
 
 <!-- TEAM GROUPS -->
 <section class="py-20 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+    <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
 
         {% for group in team_groups %}
         <div>
@@ -36,12 +36,12 @@
             <!-- Group Cards (centered rows) -->
             <div class="flex flex-wrap justify-center gap-6">
                 {% for member in group.members %}
-                <button type="button" data-team-index="{{ member.index }}" onclick="openTeamBio({{ member.index }})" class="text-left bg-white rounded-2xl p-6 border border-slate-100 shadow-md hover-lift group cursor-pointer w-[calc(50%_-_12px)] md:w-[calc(33.333%_-_16px)] lg:w-[calc(20%_-_19.2px)]">
-                    <div class="w-24 h-24 md:w-28 md:h-28 xl:w-32 xl:h-32 mx-auto rounded-full overflow-hidden bg-lacd-navy/5 ring-4 ring-lacd-green/10 group-hover:ring-lacd-gold/40 transition-all mb-4">
+                <button type="button" data-team-index="{{ member.index }}" onclick="openTeamBio({{ member.index }})" class="text-left bg-white rounded-2xl p-7 border border-slate-100 shadow-md hover-lift group cursor-pointer w-[calc(50%_-_12px)] md:w-[calc(33.333%_-_16px)] lg:w-[calc(20%_-_19.2px)]">
+                    <div class="w-24 h-24 sm:w-36 sm:h-36 lg:w-28 lg:h-28 xl:w-40 xl:h-40 2xl:w-44 2xl:h-44 mx-auto rounded-full overflow-hidden bg-lacd-navy/5 ring-4 ring-lacd-green/10 group-hover:ring-lacd-gold/40 transition-all mb-4">
                         {% if member.photo %}
                             <img src="{{ member.photo }}" alt="{{ member.name }}" class="w-full h-full object-cover">
                         {% else %}
-                            <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green text-lacd-gold flex items-center justify-center text-3xl md:text-4xl font-heading font-extrabold">{{ member.name|slice:":1" }}</div>
+                            <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green text-lacd-gold flex items-center justify-center text-3xl sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-heading font-extrabold">{{ member.name|slice:":1" }}</div>
                         {% endif %}
                     </div>
                     <h4 class="font-heading font-bold text-base text-lacd-navy text-center group-hover:text-lacd-green transition-colors">{{ member.name }}</h4>
