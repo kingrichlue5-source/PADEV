@@ -36,12 +36,12 @@
             <!-- Group Cards (centered rows) -->
             <div class="flex flex-wrap justify-center gap-6">
                 {% for member in group.members %}
-                <button type="button" data-team-index="{{ member.index }}" onclick="openTeamBio({{ member.index }})" class="text-left bg-white rounded-2xl p-7 border border-slate-100 shadow-md hover-lift group cursor-pointer w-[calc(50%_-_12px)] md:w-[calc(33.333%_-_16px)] lg:w-[calc(20%_-_19.2px)]">
-                    <div class="w-24 h-24 sm:w-36 sm:h-36 lg:w-28 lg:h-28 xl:w-40 xl:h-40 2xl:w-44 2xl:h-44 mx-auto rounded-full overflow-hidden bg-lacd-navy/5 ring-4 ring-lacd-green/10 group-hover:ring-lacd-gold/40 transition-all mb-4">
+                <button type="button" data-team-index="{{ member.index }}" onclick="openTeamBio({{ member.index }})" class="text-left bg-white rounded-2xl p-7 border border-slate-100 shadow-md hover-lift group cursor-pointer w-[calc(50%_-_12px)] md:w-[calc(33.333%_-_16px)] lg:w-[calc(25%_-_18px)]">
+                    <div class="w-24 h-24 sm:w-36 sm:h-36 xl:w-48 xl:h-48 2xl:w-56 2xl:h-56 mx-auto rounded-full overflow-hidden bg-lacd-navy/5 ring-4 ring-lacd-green/10 group-hover:ring-lacd-gold/40 transition-all mb-4">
                         {% if member.photo %}
                             <img src="{{ member.photo }}" alt="{{ member.name }}" class="w-full h-full object-cover">
                         {% else %}
-                            <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green text-lacd-gold flex items-center justify-center text-3xl sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-heading font-extrabold">{{ member.name|slice:":1" }}</div>
+                            <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green text-lacd-gold flex items-center justify-center text-3xl sm:text-5xl xl:text-6xl 2xl:text-7xl font-heading font-extrabold">{{ member.name|slice:":1" }}</div>
                         {% endif %}
                     </div>
                     <h4 class="font-heading font-bold text-base text-lacd-navy text-center group-hover:text-lacd-green transition-colors">{{ member.name }}</h4>
@@ -63,8 +63,8 @@
 <!-- TEAM BIO MODAL -->
 <div id="team-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4" role="dialog" aria-modal="true">
     <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeTeamBio()"></div>
-    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden transform transition-all">
-        <div class="bg-gradient-to-r from-lacd-navy to-lacd-green p-6 relative">
+    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-hidden transform transition-all flex flex-col">
+        <div class="bg-gradient-to-r from-lacd-navy to-lacd-green p-6 relative shrink-0">
             <button type="button" onclick="closeTeamBio()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 text-white hover:bg-lacd-gold hover:text-lacd-navy flex items-center justify-center transition-colors" aria-label="Close bio">
                 <i class="ri-close-line text-xl"></i>
             </button>
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-6">
+        <div class="p-6 overflow-y-auto min-h-0">
             <p id="modal-bio" class="text-sm text-slate-600 leading-relaxed"></p>
         </div>
     </div>
