@@ -33,25 +33,25 @@
                 <h2 class="text-3xl font-heading font-extrabold text-lacd-navy">{{ group.title }}</h2>
             </div>
 
-            <!-- Group Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <!-- Group Cards (centered rows) -->
+            <div class="flex flex-wrap justify-center gap-6">
                 {% for member in group.members %}
-                <button type="button" data-team-index="{{ member.index }}" onclick="openTeamBio({{ member.index }})" class="text-left bg-white rounded-2xl p-5 border border-slate-100 shadow-md hover-lift group cursor-pointer w-full">
-                    <div class="w-24 h-24 mx-auto rounded-full overflow-hidden bg-lacd-navy/5 ring-4 ring-lacd-green/10 group-hover:ring-lacd-gold/40 transition-all mb-4">
+                <button type="button" data-team-index="{{ member.index }}" onclick="openTeamBio({{ member.index }})" class="text-left bg-white rounded-2xl p-6 border border-slate-100 shadow-md hover-lift group cursor-pointer w-[calc(50%_-_12px)] md:w-[calc(33.333%_-_16px)] lg:w-[calc(20%_-_19.2px)]">
+                    <div class="w-24 h-24 md:w-28 md:h-28 xl:w-32 xl:h-32 mx-auto rounded-full overflow-hidden bg-lacd-navy/5 ring-4 ring-lacd-green/10 group-hover:ring-lacd-gold/40 transition-all mb-4">
                         {% if member.photo %}
                             <img src="{{ member.photo }}" alt="{{ member.name }}" class="w-full h-full object-cover">
                         {% else %}
-                            <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green text-lacd-gold flex items-center justify-center text-3xl font-heading font-extrabold">{{ member.name|slice:":1" }}</div>
+                            <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green text-lacd-gold flex items-center justify-center text-3xl md:text-4xl font-heading font-extrabold">{{ member.name|slice:":1" }}</div>
                         {% endif %}
                     </div>
-                    <h4 class="font-heading font-bold text-sm text-lacd-navy text-center group-hover:text-lacd-green transition-colors">{{ member.name }}</h4>
+                    <h4 class="font-heading font-bold text-base text-lacd-navy text-center group-hover:text-lacd-green transition-colors">{{ member.name }}</h4>
                     <p class="text-[11px] font-semibold text-slate-500 text-center mt-1 leading-snug">{{ member.position }}</p>
                     <span class="inline-flex items-center gap-1 text-[11px] font-bold text-lacd-green mt-3 justify-center w-full">
                         <i class="ri-eye-line"></i> Click to see bio
                     </span>
                 </button>
                 {% empty %}
-                <div class="col-span-full text-center py-12 text-slate-500">No team members in this category yet.</div>
+                <div class="w-full text-center py-12 text-slate-500">No team members in this category yet.</div>
                 {% endfor %}
             </div>
         </div>
