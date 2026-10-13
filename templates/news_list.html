@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}News & Articles | {{ site_settings.agency_acronym }} Liberia{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HERO -->
+<section class="py-16 bg-lacd-navy text-white relative bg-grid-pattern">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+        <a href="{% url 'core:home' %}" class="inline-flex items-center gap-1 text-xs text-lacd-gold hover:underline mb-2">&larr; Back to Home</a>
+        <span class="inline-block px-3 py-1 rounded-full bg-lacd-gold/20 text-lacd-gold text-xs font-bold uppercase tracking-wider">
+            <i class="ri-news-line"></i> NEWS & UPDATES
+        </span>
+        <h1 class="text-4xl sm:text-5xl font-heading font-extrabold text-white">News & Articles</h1>
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm">
+            Field progress updates, announcements, and stories from our work with forest-fringed communities across Liberia.
+        </p>
+    </div>
+</section>
+
+<!-- ALL NEWS -->
+<section class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for item in news %}
+            <article class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-md hover-lift flex flex-col group">
+                <div class="h-52 overflow-hidden relative">
+                    {% if item.featured_image %}
+                        <img src="{{ item.featured_image.url }}" alt="{{ item.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-lacd-navy to-lacd-green"></div>
+                    {% endif %}
+                    <span class="absolute top-4 left-4 bg-lacd-gold text-lacd-navy text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full">{{ item.get_category_display }}</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-bold text-lacd-green uppercase tracking-wide">
+                            <i class="ri-calendar-line"></i> {{ item.published_date|date:"F d, Y" }} | {{ item.author }}
+                        </span>
+                        <h3 class="font-heading font-bold text-lg text-lacd-navy leading-snug group-hover:text-lacd-green transition-colors">
+                            <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">{{ item.excerpt|truncatechars:200 }}</p>
+                    </div>
+                    <a href="{{ item.get_absolute_url }}" class="inline-flex items-center gap-1 text-xs font-bold text-lacd-green hover:text-lacd-gold transition-colors">
+                        <span>Read Article</span>
+                        <i class="ri-arrow-right-s-line"></i>
+                    </a>
+                </div>
+            </article>
+            {% empty %}
+            <div class="col-span-full text-center py-12 text-slate-500">No news articles available yet.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -500,10 +500,10 @@
         </div>
 
         <!-- News Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-6">
             {% for news in news_list %}
             <article class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 shadow-md hover-lift flex flex-col group">
-                <div class="h-52 overflow-hidden relative">
+                <div class="h-52 lg:h-36 overflow-hidden relative">
                     {% if news.featured_image %}
                         <img src="{{ news.featured_image.url }}" alt="{{ news.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     {% else %}
@@ -511,12 +511,12 @@
                     {% endif %}
                     <span class="absolute top-4 left-4 bg-lacd-gold text-lacd-navy text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full">{{ news.get_category_display }}</span>
                 </div>
-                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                <div class="p-6 lg:p-4 flex-1 flex flex-col justify-between space-y-4">
                     <div class="space-y-2">
                         <span class="text-[11px] font-bold text-lacd-green uppercase tracking-wide">
                             <i class="ri-calendar-line"></i> {{ news.published_date|date:"F d, Y" }} | {{ news.author }}
                         </span>
-                        <h3 class="font-heading font-bold text-lg text-lacd-navy leading-snug group-hover:text-lacd-green transition-colors">
+                        <h3 class="font-heading font-bold text-base lg:text-sm text-lacd-navy leading-snug group-hover:text-lacd-green transition-colors">
                             <a href="{% url 'core:news_detail' news.slug %}">{{ news.title }}</a>
                         </h3>
                         <p class="text-xs text-slate-500 leading-relaxed">{{ news.excerpt|truncatechars:150 }}</p>
@@ -528,8 +528,15 @@
                 </div>
             </article>
             {% empty %}
-            <div class="col-span-3 text-center py-12 text-slate-500">No news articles available yet.</div>
+            <div class="col-span-full text-center py-12 text-slate-500">No news articles available yet.</div>
             {% endfor %}
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{% url 'core:news_list' %}" class="inline-flex items-center gap-2 bg-lacd-navy hover:bg-lacd-green text-white font-heading font-bold px-8 py-3.5 rounded-full shadow transition-all">
+                <span>View All News</span>
+                <i class="ri-arrow-right-line"></i>
+            </a>
         </div>
 
     </div>

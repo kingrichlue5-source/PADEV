@@ -66,7 +66,7 @@ class HomeView(TemplateView):
             Project.objects.filter(status='ongoing').order_by('-is_featured', '-created_at')[:3]
         )
         context['projects'] = active_projects or list(Project.objects.filter(is_featured=True)[:3])
-        context['news_list'] = NewsUpdate.objects.all()[:3]
+        context['news_list'] = NewsUpdate.objects.all()[:6]
         context['success_stories'] = SuccessStory.objects.filter(is_featured=True)[:3]
         context['clients'] = Client.objects.filter(is_active=True)
 
@@ -126,6 +126,12 @@ class TeamView(TemplateView):
         context['team_groups'] = groups
         context['team_data'] = flat
         return context
+
+
+class NewsUpdateListView(ListView):
+    model = NewsUpdate
+    template_name = 'news_list.html'
+    context_object_name = 'news'
 
 
 class ProgramListView(ListView):

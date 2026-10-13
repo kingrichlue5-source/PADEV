@@ -3,7 +3,7 @@ from .views import (
     HomeView, TeamView, ProgramListView, ProgramDetailView,
     ProjectListView, ProjectDetailView, ProcurementListView,
     CareerListView, PublicationListView, ContactView,
-    NewsUpdateDetailView, SuccessStoryDetailView,
+    NewsUpdateDetailView, NewsUpdateListView, SuccessStoryDetailView,
     PublicationDetailView, ProcurementDetailView, CareerDetailView,
     HeroSlideDetailView, ProgramStructureDetailView, AboutView,
 )
@@ -20,6 +20,7 @@ urlpatterns = [
     path('programmes/<slug:slug>/', ProgramDetailView.as_view(), name='program_detail'),
     path('projects/', ProjectListView.as_view(), name='project_list'),
     path('projects/<slug:slug>/', ProjectDetailView.as_view(), name='project_detail'),
+    path('news/', NewsUpdateListView.as_view(), name='news_list'),
     path('news/<slug:slug>/', NewsUpdateDetailView.as_view(), name='news_detail'),
     path('stories/<slug:slug>/', SuccessStoryDetailView.as_view(), name='story_detail'),
     path('publications/', PublicationListView.as_view(), name='publication_list'),
