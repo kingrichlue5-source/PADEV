@@ -7,14 +7,11 @@
 {% block content %}
 
 <!-- HERO SECTION (EDUKA CONCEPT INSPIRED) -->
-<section class="relative {% if site_settings.hero_background_image %}bg-cover bg-center bg-no-repeat{% else %}bg-gradient-to-b from-slate-900 via-lacd-navy to-lacd-green-dark{% endif %} text-white pt-12 pb-32 overflow-hidden bg-grid-pattern"
+<section class="relative {% if site_settings.hero_background_image %}bg-contain bg-center bg-no-repeat bg-lacd-green-dark{% else %}bg-gradient-to-b from-slate-900 via-lacd-navy to-lacd-green-dark{% endif %} text-white pt-12 pb-32 overflow-hidden bg-grid-pattern"
          {% if site_settings.hero_background_image %}style="background-image: url('{{ site_settings.hero_background_image.url }}');"{% endif %}>
     <!-- Geometric Background Lights -->
     <div class="absolute -top-24 -left-24 w-96 h-96 bg-lacd-gold/15 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute top-1/2 -right-24 w-96 h-96 bg-lacd-green/30 rounded-full blur-3xl pointer-events-none"></div>
-    {% if site_settings.hero_background_image %}
-    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-lacd-navy/70 to-lacd-green-dark/90 pointer-events-none"></div>
-    {% endif %}
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
